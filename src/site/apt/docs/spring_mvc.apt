@@ -1,0 +1,161 @@
+            ------
+            User Guide : Spring MVC Support
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide : Spring MVC Support
+  
+  JSOG supports integration with the Spring MVC Framework. With this integration
+  you can easily accept and expose JSOG objects to the web.
+
+* The Easy Way - StringJsogHttpMessageConverter
+
+  Many web services today use JSON for their data layer. You can now accept JSON
+  in the form of a JSOG in your Spring MVC controllers:
+
++-------------------------------------------------------------------------------
+@RequestMapping(method=RequestMethod.POST, value="/foo")
+@ResponseBody
+public JSOG foo(@RequestBody JSOG request) {
+    // Do some stuff with request
+    return JSOG.object("response", "ok");
+}
++-------------------------------------------------------------------------------
+
+  In the above example, the @RequestBody takes the POSTed data, and parses it
+  into a JSOG. @ResponseBody transforms your JSOG into a string and returns it
+  to the user.
+
+  You can mix and match these, of course:
+
++-------------------------------------------------------------------------------
+@RequestMapping(method=RequestMethod.GET, value="/foo")
+@ResponseBody
+public JSOG foo() {
+    return JSOG.object("some", "data");
+}
+
+@RequestMapping(method=RequestMethod.POST, value="/bar")
+public ModelAndView bar(@RequestBody JSOG request) {
+    return new ModelAndView();
+}
++-------------------------------------------------------------------------------
+
+** Configuration
+
+
+  In your DispatcherServlet configuration, add the following:
+
++-------------------------------------------------------------------------------
+<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+  <property name="messageConverters">
+    <list>
+      <!-- String/JSOG conversion via RequestBody and ResponseBody. -->
+      <bean class="net.sf.jsog.spring.StringJsogHttpMessageConverter"/>
+
+      <!-- Standard message converters -->
+      <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+      <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+      <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+      <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+    </list>
+  </property>
+</bean>
++-------------------------------------------------------------------------------
+
+  If you want to support returning JSOG from an exception handler, add also:
+
++-------------------------------------------------------------------------------
+<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver" p:order="1">
+  <property name="messageConverters">
+    <list>
+      <!-- String/JSOG conversion via RequestBody and ResponseBody. -->
+      <bean class="net.sf.jsog.spring.StringJsogHttpMessageConverter"/>
+
+      <!-- Standard message converters -->
+      <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+      <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+      <bean class="org.springframework.http.converter.StringHttpMessageConverter"/>
+      <bean class="org.springframework.http.converter.xml.SourceHttpMessageConverter"/>
+    </list>
+  </property>
+</bean>
++-------------------------------------------------------------------------------
+
+  This is certainly the easiest way to work with JSOG in an MVC environment, but
+  if you need JSONP support, or want to convert objects to JSOG automatically,
+  keep reading.
+
+* The Flexible Way - JsogView
+
+** Before we get started
+
+  These two methods are not mutually exclusive; you can use
+  StringJsogHttpMessageConverter and JsogView at the same time. However, only
+  the view supports JSONP and object conversion.
+
+  The JsogView method is highly configurable. Your configuration will
+  determine how involved <using> the view method is. Because of this, we'll
+  step through the configuration and examples at the same time.
+
+  Using <<<@ResponseBody>>> will direct the request through the message
+  converter, while it's absence will direct the request through the view.
+
+** JsogViewResolver
+
+  This class determines <when> JsogView will be used.
+
+  A spring ViewResolver resolves a <view name> to a <View> object.
+  A ViewResolver can return null if it is not configured to handle a view name;
+  this permits view resolver chaining. If you have another view technology you
+  need to support, you must use chaining (or multiple DispatcherServlets).
+  If none of your controllers require a view (an API-only service, for instance)
+  you do not need to use chaining.
+
+  If you do not need to use chaining, you should configure the JsogViewResolver
+  with a null <viewName>. This will cause it to <<always>> return the JsogView;
+  this is the default.
+
+  If you do need to use chaining, you will need to specify a <viewName>.
+  Choose a name that will not be used elsewhere, such as ":JSOG". You will use
+  this name when you create a ModelAndView: <<<new ModelAndView(":JSOG")>>>.
+
++-------------------------------------------------------------------------------
+<bean id="viewResolver" class="net.sf.jsog.spring.JsogViewResolver">
+  <!-- Required to support chaining -->
+  <property name="viewName" value=":JSOG"/>
+</bean>
++-------------------------------------------------------------------------------
+
+** JsogView
+
+  This class determines <how> your model is rendered.
+
+  If you don't need object conversion, the easiest way to use JsogView is to
+  return a JSOG directly from your method. You can only do this if you <are not>
+  using view resolver chaining.
+
+  Returning a JSOG causes Spring to create an implicit model with the JSOG
+  mapped to the "JSOG" key. The JsogView will render the value directly if this
+  is the only key in the model.
+
+*** JSONP Support
+
+  If the request specifies the callback parameter, the output string is wrapped
+  with the method call specified in the parameter.
+
+  By default, the name of the callback parameter is "callback". The parameter's
+  name is configured with the <jsonpCallbackParam> property.
+
+  If the default functionality is sufficient for your uses, you don't need to
+  do any configuration. Otherwise, the JsonView is specified as a property of
+  JsonViewResolver.
+
++-------------------------------------------------------------------------------
+<bean id="viewResolver" class="net.sf.jsog.spring.JsogViewResolver">
+  <!-- Required to support chaining -->
+  <property name="viewName" value=":JSOG"/>
+</bean>
++-------------------------------------------------------------------------------

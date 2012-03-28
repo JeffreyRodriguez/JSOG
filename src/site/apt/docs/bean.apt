@@ -1,0 +1,93 @@
+            ------
+            User Guide : Bean Factory
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide : Bean Factory
+  
+  The BeanJsogFactory can transform JavaBeans into JSOG objects.
+
+* Usage
+
+  Only JavaBeans, primitives, and JSOG objects can be serialized. Nested beans
+  are supported, provided their properties are one of the noted types.
+
+  The factory accepts an optional PropertyFilter for selecting properties
+  that are to be serialized.
+
++-------------------------------------------------------------------------------
+public class Foo {
+  public String getBar() {
+    return "bar";
+  }
+
+  public Integer getBaz() {
+    return "baz";
+  }
+
+  public Qux getQux() {
+    return new Qux();
+  }
+}
+
+public class Qux {
+  public String getQuux() {
+    return "quux";
+  }
+}
+
+JSOG result = BeanJsogFactory.getSingleton().create(new Foo());
+
+List<Foo> listOfFoo = ...
+JSOG result = BeanJsogFactory.getSingleton().create(listOfFoo);
+
+Map<String, Foo> mapOfFoo = ...
+JSOG result = BeanJsogFactory.getSingleton().create(mapOfFoo);
++-------------------------------------------------------------------------------
+
+** Single Bean
+
+  Passing in a single bean causes the factory to serialize it as a JSOG object.
+
+** List of Beans
+
+  Passing in a list of beans causes the factory to serialize each bean to a JSOG
+  object, and add it to a JSOG array.
+
+** Map of Beans
+
+  Passing in a map of beans causes the factory to serialize each bean into a
+  JSOG object, and add it to a JSOG object, keyed by the map key. Only maps with
+  String keys are supported.
+
+* Property Filters
+
+  Property filters allow you to selectively include/exclude properties during
+  the serialization process.
+
+  Using property filters is easy, simply pass the property filter to the
+  factory's create method.
+
+** ClassNamePropertyFilter
+
+  This PropertyFilter allows you to filter properties based on class name.
+
+  Features:
+
+    * Supports suffix wildcards
+
+    * Honors ordering
+
+    * Default exclude
+
+  The ClassNamePropertyFilter constructor takes a boolean. If set to true, it
+  causes the filter to include primitive types.
+
++-------------------------------------------------------------------------------
+ClassNamePropertyFilter instance = new ClassNamePropertyFilter(true);
+instance.include("foo.bar.*");
+instance.exclude("java.lang.Integer");
+instance.include("java.lang.*");
++-------------------------------------------------------------------------------

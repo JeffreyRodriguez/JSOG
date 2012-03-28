@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+         http://maven.apache.org/DECORATION/1.0.0
+         http://maven.apache.org/xsd/decoration-1.0.0.xsd"
+         name="JavaScript Object Graph">
+  <bannerLeft>
+    <name>JavaScript Object Graph</name>
+  </bannerLeft>
+  <body>
+
+    <menu name="JSOG">
+      <item name="Download" href="download.html"/>
+      <item name="User Guide" href="docs/index.html">
+          <item name="JSOGPath" href="docs/path.html"/>
+          <item name="Client" href="docs/client.html"/>
+          <item name="Spring MVC Support" href="docs/spring_mvc.html"/>
+          <item name="Spring Namespace Support" href="docs/spring_ns.html"/>
+          <item name="Dynamic Methods" href="docs/dynamic.html"/>
+          <item name="XML Factory" href="docs/xml.html"/>
+          <item name="Bean Factory" href="docs/bean.html"/>
+      </item>
+    </menu>
+
+    <menu ref="reports"/>
+  </body>
+</project>

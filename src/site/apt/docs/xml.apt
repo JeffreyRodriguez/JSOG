@@ -1,0 +1,93 @@
+            ------
+            User Guide : XML Factory
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide : XML Factory
+  
+  The XmlJsogFactory parses XML and transforms it into BadgerFish formatted
+  JSOG.
+
+  Namespaces are not currently supported.
+
+* Usage Example
+
++-------------------------------------------------------------------------------
+JSOG parsed = XmlJsogFactory.getSingleton().read("...");
+
+JSOG parsed = XmlJsogFactory.getSingleton().read(inputStream);
++-------------------------------------------------------------------------------
+
+  The XmlJsogFactory singleton should work for most basic XML processing.
+
+  If you need to customize how the XML parser works, you can construct your own
+  XmlJsogFactory with an XMLInputFactory to suit your needs.
+
+* Rules
+
+  * Element names become object properties
+
+  * Text content of elements goes in the $ property of an object.
+
++-------------------------------------------------------------------------------
+<alice>bob</alice>
+
+{
+  "alice": {
+    "$": "bob"
+  }
+}
++-------------------------------------------------------------------------------
+
+  * Nested elements become nested properties
+
++-------------------------------------------------------------------------------
+<alice>
+    <bob>charlie</bob>
+    <david>edgar</david>
+</alice>
+
+{
+  "alice": {
+    "bob": {
+      "$": "charlie"
+    },
+    "david": {
+      "$": "edgar"
+    }
+  }
+}
++-------------------------------------------------------------------------------
+
+  * Multiple elements at the same level become array elements.
+
++-------------------------------------------------------------------------------
+<alice>
+  <bob>charlie</bob>
+  <bob>david</bob>
+</alice>
+
+{
+  "alice": {
+    "bob": [
+      {"$": "charlie"},
+      {"$": "david"}
+    ]
+  }
+}
++-------------------------------------------------------------------------------
+ 
+  *  Attributes go in properties whose names begin with @.
+
++-------------------------------------------------------------------------------
+<alice charlie="david">bob</alice>
+
+{
+  "alice": {
+    "$": "bob",
+    "@charlie" : "david"
+  }
+}
++-------------------------------------------------------------------------------

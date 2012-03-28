@@ -1,0 +1,200 @@
+            ------
+            User Guide
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide
+
+  JSOG is designed to 'trust the developer'. The general assumption is that you
+  know what your JSON object contains, and you can easily find out if you don't.
+
+  JSOG is based on JSON, as such it supports three basic types:
+
+  * Primitives
+
+  * Arrays
+
+  * Objects
+
+
+* Primitives
+
+  Primitives are simple, single values. The following types are
+  considered primitives:
+
+  * null
+
+  * BigDecimal
+
+  * BigInteger
+
+  * Byte
+
+  * Character
+
+  * Short
+
+  * Integer
+
+  * Long
+
+  * Float
+
+  * Double
+
+  * String
+
+
+* Arrays
+
+  Arrays in the JavaScript sense. They are essentially Java lists.
+
+
+* Objects
+
+  Objects in the JavaScript sense. They are essentially Java maps.
+
+
+Working With Objects
+
+  Note that in the examples below, the JSON is pretty-printed for readability. If
+  you were to actually serialize the JSOG into JSON, you would get the condensed
+  version.
+
++-------------------------------------------------------------------------------
+import net.sf.jsog.JSOG;
+...
+
+// Parse a JSON object string
+JSOG object = JSOG.parse("{\"bar\":true,\"baz\":false}");
+assert(object.isObject() == true);
+assert(object.get("bar").getValue() == Boolean.TRUE);
+assert(object.get("baz").getValue() == Boolean.FALSE);
+
+// Builder syntax: Put works on a single JSOG
+object
+    .put("qux", null)
+    .put("quux", "some value");
+
+/* The JSOG now represents:
+ * {
+ *   "bar":true,
+ *   "baz":false,
+ *   "qux":null,
+ *   "quux":"some value"
+ * }
+ */
+assert(object.get("qux").getValue() == null);
+assert("some value".equals(object.get("quux").getValue()));
++-------------------------------------------------------------------------------
+
+Working With Arrays
+
++-------------------------------------------------------------------------------
+import net.sf.jsog.JSOG;
+...
+
+// Parse a JSON array string
+JSOG array = JSOG.parse("[\"foo\",\"bar\",\"baz\"]");
+assert(array.isArray() == true);
+
+// Builder syntax: Add works on a single JSOG
+array
+    .add("qux")
+    .add("quux");
+
+/* The JSOG now represents:
+ * [
+ *   "foo",
+ *   "bar",
+ *   "baz",
+ *   "qux",
+ *   "quux"
+ * ]
+ */
+assert("foo".equals(array.get(0).getValue()));
+assert("bar".equals(array.get(1).getValue()));
+assert("baz".equals(array.get(2).getValue()));
+assert("qux".equals(array.get(3).getValue()));
+assert("quux".equals(array.get(4).getValue()));
++-------------------------------------------------------------------------------
+
+JSOG Navigation
+
+  Object graph navigation was the primary motivation behind the creation of the
+  JSOG library.
+
+  In the example below, the <<<get(String)>>> method does all the magic for us.
+  It navigates relationships, creating them as necessary.
+
+
+  The <<<add(Object)>>> and <<<put(String, Object)>>> methods return the node
+  upon which they were called. After a few examples, you will see this is a very
+  natural and instinctive way to work with JSOG instances.
+
++-------------------------------------------------------------------------------
+JSOG jsog = JSOG.createObjectNode(); // We need to save this value because we
+                                     // can lose it if we navigate using
+                                     // get(String).
+jsog
+    .get("foo") // Returns the value of root.foo
+                // Since this is an empty object and the foo key does not exist,
+                // it is implicitly created and a null-valued JSOG is stored as
+                // it's value. If the object were serialized right now, it would
+                // look like this:
+                // {
+                //   "foo": null
+                // }
+
+    .get("bar") // Now we've navigated to root.foo.bar and our JSON string is:
+                // {
+                //   "foo": {
+                //     "bar": null
+                //   }
+                // }
+
+    .add("qux")  // We start out at the root.foo.bar node. The add method
+    .add("quux") // returns the node it was working on so we can easily add
+                 // multiple values to that node. It implicitly converts the
+                 // null-valued JSOG node to an array so we can add values.
+                 // Now our JSON would serialize to:
+                 // {
+                 //   "foo": {
+                 //     "bar": [
+                 //       "qux",
+                 //       "quux"
+                 //     ]
+                 //   }
+                 // }
+
+    .add(JSOG.createObjectNode()// Calling get(String) now would fail because our
+        .put("flob", 42)        // current JSOG is an array, not an object, and
+        .put("wibble", true)    // only null-valued JSOG instances can be coerced
+        .put("wobble", false)   // into different types.
+    );                          // What we *can* do, is add a JSOG to the array.
+                                // Note that get("flob") gets us navigating once
+                                // more down to root.foo.bar[2].flob, where we
+                                // set it's value to the number 42.
+                                // to produce the JSON:
+                                // {
+                                //   "foo": {
+                                //     "bar": [
+                                //       "qux",
+                                //       "quux",
+                                //       {
+                                //         "flob": 42,
+                                //         "wibble": true,
+                                //         "wobble": false
+                                //       }
+                                //     ]
+                                //   }
+                                // }
++-------------------------------------------------------------------------------
+
+* Navigation gotchas
+
+  When navigating, keep in mind that <<<get(String)>>> returns the value of the
+  key it created. If you seem to be missing a chunk of your object graph, it was
+  probably swallowed by a call to <<<get(String)>>>.

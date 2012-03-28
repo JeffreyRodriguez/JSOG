@@ -1,0 +1,71 @@
+            ------
+            User Guide : Dynamic Methods
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide : Dynamic Methods
+  
+  JSOG Dynamic Methods give you the ability to build applications that handle
+  JSOG in a declarative way.
+
+  Consider this example of a JSON-based web service:
+
++-------------------------------------------------------------------------------
+{
+  "search": "lord of the rings",
+  "type": "book"
+}
++-------------------------------------------------------------------------------
+
++-------------------------------------------------------------------------------
+
+// The Foo web service offers a method that can be used for searching media
+public class Foo {
+  public JSOG search(@JsonPath(value="$.search", required=true) String search,
+                     @JsonPath(value="$.type", required=true) String type,
+                     @JsonPath("$.maxResults") int maxResults,
+                     @JsonPath("$.year") Integer year) {
+
+      // search and type must exist in the object graph.
+      // We retrieve them as strings.
+
+      // maxResults must also exist in the object graph, since it is a primitive
+      // (int).
+
+      // year may or may not exist in the object graph, since it is a primitive
+      // wrapper (Integer), and can have a null value. Also, it's "required"
+      // option is not set, and defaults to false.
+      ...
+  }
+}
+
+// Now we need to create a JsogMethod in order to invoke the search method.
+// We can do this by letting JsogMethod look for the first method named "search"
+// in the Foo class.
+JsogMethod<JSOG> jsogMethod = new JsogMethod<JSOG>(Foo.class, "search");
+
+// or you could look up the method yourself and give it to JsogMethod.
+Method method = ...
+JsogMethod<JSOG> jsogMethod = new JsogMethod<JSOG>(method);
+
+// The next step is to invoke the method, and you need an instance of Foo
+Foo foo = new Foo();
+
+// We also need a JSOG to give it, assume we're using the example JSOG above
+JSOG jsog = ...
+JSOG result = jsogMethod.invoke(foo, jsog);
++-------------------------------------------------------------------------------
+
+  JSOG dynamic methods allow us to create methods that can extract specific
+  values out of the object graph, and give them to the method as arguments.
+
+  If a required value is missing, {invoke} will throw an
+  IllegalArgumentException. Any exceptions thrown by the target method will be
+  wrapped in an InvocationTargetException.
+
+  Obviously, dynamic methods are aimed toward creating services and other
+  complex systems. JSOGPath only supports basic navigation as of now, but as
+  it becomes more advanced, you can see how this system has the potential to be
+  very powerful. All while hiding away the details and keeping your code clean.

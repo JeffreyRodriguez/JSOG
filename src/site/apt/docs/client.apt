@@ -1,0 +1,65 @@
+            ------
+            User Guide : Client
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide : Client
+  
+  JSOG has an HTTP client, built on Apache's HttpClient project. The JSOG HTTP
+  client has two levels:
+
+    * A simple HTTP POST/GET implementation that works exclusively with strings.
+
+    * A more highly abstracted client that sends and receives JSON, stringifying
+      and parsing from/to JSOG automatically.
+
+  Both are thread safe and reusable.
+
+* Low-level operations with HttpClient
+
++-------------------------------------------------------------------------------
+HttpClient hc = new DefaultHttpClientImpl();
+
+String result = hc.get("http://www.example.com/");
+
+String result = hc.post("http://www.example.com/submit",
+                        JSOG.object("foo", "bar").toString());
++-------------------------------------------------------------------------------
+
+  When POSTing, the the client uses the "application/json" content type, with
+  the "ISO-8859-1" encoding.
+
+  It supports HTTP and HTTPS (with all the fun of Java's SSL handling).
+
+  You can set the client's connection timeout, socket timeout, content type,
+  charset (encoding), headers, and user agent all by calling the appropriate
+  setter method.
+
+* High-level operations with JsogClient
+
+  The JsogClient automatically stringifies and parses JSON into JSOG objects.
+
+  Note that the DefaultJsogClientImpl extends DefaultHttpClientImpl.
+
++-------------------------------------------------------------------------------
+JsogClient jc = new DefaultJsogClientImpl();
+
+JSOG result = jc.get("http://www.example.com/");
+
+JSOG result = jc.post("http://www.example.com/submit",
+                        JSOG.object("foo", "bar"));
+
+JSOG result = jc.post("http://www.example.com/submit",
+                        JSOG.object("foo", "bar").toString());
++-------------------------------------------------------------------------------
+
+  When POSTing, the the client uses the "application/json" content type, with
+  the "ISO-8859-1" encoding.
+
+  It supports HTTP and HTTPS (with all the fun of Java's SSL handling).
+
+  You can set the client's connection timeout, socket timeout, content type,
+  charset (encoding), headers, and user agent all by calling the appropriate
+  setter method.

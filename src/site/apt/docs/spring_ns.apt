@@ -1,0 +1,38 @@
+            ------
+            User Guide : Spring Namespace Support
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide : Spring Namespace Support
+  
+  JSOG supports integration with the Spring XML application context.
+
+* UrlBuilder
+
+  You can now inject UrlBuilder instances through the XML application context.
+  Below is an example Spring XML configuration file.
+
++-------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:jsog="http://jsog.sf.net/schema/spring/jsog"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://jsog.sf.net/schema/spring/jsog
+       http://jsog.sf.net/schema/spring/jsog.xsd">
+           
+    <jsog:url id="url" base="http://www.example.com/">
+        <jsog:parameter name="foo" value="bar"/>
+        <jsog:parameter name="foo" value="baz"/>
+        <jsog:parameter name="qux" value="quux"/>
+    </jsog:url>
+</beans>
++-------------------------------------------------------------------------------
+
+  This will create a UrlBuilder, whose toString() method will return:
+
+  {http://www.example.com?foo=bar&foo=baz&qux=quux}

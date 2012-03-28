@@ -1,0 +1,21 @@
+            ------
+            Overview
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+JavaScript Object Graph
+
+  The JSOG library makes working with JSON simple. While many JSON libraries are
+  excellent for reading and writing JSON, working with JSON objects in memory
+  can be cumbersome and verbose.
+
+
+  JSOG provides the developer with an easy way to read, write, and manipulate
+  JSON objects. The Jackson JSON library provides serialization and
+  deserialization support for JSOG.
+
+Getting Started
+
+  {{{./download.html}Download}} the library and read the {{{./docs/index.html}user guide}}.

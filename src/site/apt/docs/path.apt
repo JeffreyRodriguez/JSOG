@@ -1,0 +1,160 @@
+            ------
+            User Guide : JSOGPath
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide : JSOGPath
+  
+  JSOG part of Stefan Goessner's JSONPath implementation. Only basic expressions
+  are supported, specifically dot and bracket navigation. 
+
+  Any help in expanding JSOG's capabilites in this area are most welcome.
+
+* Example Usage
+
+  Consider the following JSON object graph, and code sample:
+
++-------------------------------------------------------------------------------
+{ "store": {
+    "book": [ 
+      { "category": "reference",
+        "author": "Nigel Rees",
+        "title": "Sayings of the Century",
+        "price": 8.95
+      },
+      { "category": "fiction",
+        "author": "Evelyn Waugh",
+        "title": "Sword of Honour",
+        "price": 12.99
+      },
+      { "category": "fiction",
+        "author": "Herman Melville",
+        "title": "Moby Dick",
+        "isbn": "0-553-21311-3",
+        "price": 8.99
+      },
+      { "category": "fiction",
+        "author": "J. R. R. Tolkien",
+        "title": "The Lord of the Rings",
+        "isbn": "0-395-19395-8",
+        "price": 22.99
+      }
+    ],
+    "bicycle": {
+      "color": "red",
+      "price": 19.95
+    }
+  }
+}
++-------------------------------------------------------------------------------
+
+
++-------------------------------------------------------------------------------
+JSOG jsog = ...;
+
+// Standard get-based style
+assertEquals("Sayings of the Century",
+             jsog.get("store")
+                   .get("book")
+                     .get(0)
+                       .get("title").getStringValue());
+
+// On-the-fly compilation
+assertEquals("Sayings of the Century",
+             jsog.path("$.store.book[0].title").getStringValue());
+
+// Pre-compilation
+JsogPath pcPath = JsogPath.compile("$.store.book[0].title");
+
+assertEquals("Sayings of the Century",
+             jsog.path(pcPath).getStringValue());
++-------------------------------------------------------------------------------
+
+  JSOG uses a JsogPath object to navigate between nodes of the object graph.
+
+  JSOG allows you to compile the expression on-the-fly, in which case a JsogPath
+  object is created and disposed of after one use. You can also precompile the
+  expression and reuse the JsogPath object.
+
+  If you're going to be using the same path often, perhaps in a loop, you should
+  definitely use a precompiled JsogPath.
+
+  When using JsogPath, keep in mind that the result of evaluating a JsogPath
+  object is always another JSOG. If you've nagivated to a value node, you will
+  need to use the appropriate get...Value method to retrieve the node's value.
+
+* Syntax
+
+  JsogPath has two navigation methods, dot and bracket. Dot navigation can be
+  used when key names are simple alpha-numerics. Bracket navigation is more
+  powerful and can be used to represent any string. Bracket navigation is also
+  used for navigating an array.
+
+  Both methods work approximately how they would in JavaScript.
+
+  All path expressions begin with the dollar sign character.
+
+** Dot Navigation
+
+  Dot navigation is simple and straight forward. You can use dot navigation to
+  walk the object graph of any object-type node. Arrays must use bracket 
+  navigation.
+
+  Below are some more examples based on the JSON object graph above.
+
+*-----------------------+-----------------------------------------+
+| Left-aligned          | Left-aligned                            |
+| Path Expression       | Value                                   |
+*-----------------------+-----------------------------------------+
+| $.store               | \{"book": \[...\], "bicycle": {...}\}   |
+*-----------------------+-----------------------------------------+
+| $.store.bicycle       | \{"color": "red", "price": 19.95\}      |
+*-----------------------+-----------------------------------------+
+| $.store.bicycle.color | "red"                                   |
+*-----------------------+-----------------------------------------+
+
+** Bracket Navigation
+
+  Bracket navigation can be as simple as dot navigation, but it is slightly more
+  verbose. It also supports escape sequences and arrays.
+
+  When navigating with brackets, keys are quoted with either single or double
+  quotes.
+
+*--------------------------+-----------------------------------------+
+| Left-aligned             | Left-aligned                            |
+| Path Expression          | Value                                   |
+*--------------------------+-----------------------------------------+
+| $['store']               | \{"book": \[...\], "bicycle": {...}\}   |
+*--------------------------+-----------------------------------------+
+| $['store'].bicycle       | \{"color": "red", "price": 19.95\}      |
+*--------------------------+-----------------------------------------+
+| $.store['bicycle'].color | "red"                                   |
+*--------------------------+-----------------------------------------+
+
+*** Escape Sequences
+
+  Bracket keys support the following escape sequences:
+
+      [\\"] Double quote
+
+      [\\'] Single quote
+
+      [\\t] Tab
+
+      [\\n] Newline
+
+      [\\r] Carriage Return
+
+      [ \\/ ] Forward Slash
+
+      [ \\\\ ] Backslash
+
+      [\\u####] Unicode values
+
+*** Arrays
+
+  When navigating an array, use brackets without quotes, and a number for the
+  index.

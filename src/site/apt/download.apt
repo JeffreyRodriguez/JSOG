@@ -1,0 +1,36 @@
+            ------
+            Download
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+HTTP Download
+
+  JSOG can be downloaded from SourceForge.net:
+  {{https://sourceforge.net/projects/jsog/files/}}
+
+Maven 2
+
++-------------------------------------------------------------------------------
+<repositories>
+    ...
+    <repository>
+        <id>jsog.sourceforge.net</id>
+        <url>http://jsog.sourceforge.net/m2-repo</url>
+    </repository>
+    ...
+</repositories>
++-------------------------------------------------------------------------------
+
++-------------------------------------------------------------------------------
+<dependencies>
+    ...
+    <dependency>
+        <groupId>net.sf.jsog</groupId>
+        <artifactId>jsog</artifactId>
+        <version>...</version>
+    </dependency>
+    ...
+</dependencies>
++-------------------------------------------------------------------------------

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:beans="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:jsog="http://jsog.sf.net/schema/spring/jsog"
+           targetNamespace="http://jsog.sf.net/schema/spring/jsog"
+           xsi:schemaLocation="
+           http://www.w3.org/2001/XMLSchema
+           http://www.w3.org/2001/XMLSchema.xsd"
+           elementFormDefault="qualified">
+
+    <xs:import namespace="http://www.springframework.org/schema/beans"/>
+
+    <xs:element name="url">
+        <xs:annotation>
+            <xs:documentation>Creates a UrlBuilder.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="beans:identifiedType">
+                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="parameter">
+                            <xs:annotation>
+                                <xs:documentation>Adds a parameter to the UrlBuilder. This has the same effect as the add(name, value) method.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:attribute name="value" type="xs:string" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>The parameter's value.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>The parameter's name.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="base" type="xs:string" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

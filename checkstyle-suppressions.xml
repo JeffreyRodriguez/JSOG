@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
+
+<suppressions>
+    <suppress checks="GenericWhitespace"
+              files="JSOG.java"
+              lines="313,322"/>
+    <suppress checks="MagicNumber"
+              files="JSOG.java"
+              lines="1489,1490"/>
+    <suppress checks="MagicNumber"
+              files="UrlBuilder.java"
+              lines="71,72"/>
+    <suppress checks="MagicNumber"
+              files="DefaultJsogClientImpl.java"
+              lines="87,90,181"/>
+    <suppress checks="DesignForExtension"
+              files="DefaultJsogClientImpl.java"
+              lines="137"/>
+</suppressions>
