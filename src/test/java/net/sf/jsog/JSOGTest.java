@@ -217,10 +217,10 @@ public class JSOGTest {
         System.out.println("testParseComplex");
 
         // Create the test JSOG
-        JSOG jsog = JSOG.createArrayNode()
+        JSOG jsog = JSOG.array()
                 .add(null)
                 .add("test")
-                .add(JSOG.createObjectNode()
+                .add(JSOG.object()
                     .put("foo", "bar")
                     .put("qux", true)
                     .put("quux", false))
@@ -247,7 +247,7 @@ public class JSOGTest {
         String jsonString = "[]";
         JSOG result = JSOG.parse(jsonString);
         assertNotNull(result);
-        assertEquals(JSOG.createArrayNode().toString(), result.toString());
+        assertEquals(JSOG.array().toString(), result.toString());
     }
 
     /**
@@ -259,7 +259,7 @@ public class JSOGTest {
         String jsonString = "{}";
         JSOG result = JSOG.parse(jsonString);
         assertNotNull(result);
-        assertEquals(JSOG.createObjectNode().toString(), result.toString());
+        assertEquals(JSOG.object().toString(), result.toString());
     }
 
     /**
@@ -272,26 +272,6 @@ public class JSOGTest {
         JSOG result = JSOG.parse(jsonString);
         assertNotNull(result);
         assertEquals(jsonString, result.toString());
-    }
-
-    /**
-     * Test of createValueNode method, of class JSOG.
-     */
-    @Test
-    public void testCreateValueNode() {
-        System.out.println("testCreateValueNode");
-        JSOG result = JSOG.createValueNode();
-        assertEquals(null, result.getValue());
-    }
-
-    /**
-     * Test of createValueNode method, of class JSOG.
-     */
-    @Test
-    public void testCreateValueNodeWithValue() {
-        System.out.println("testCreateValueNodeWithValue");
-        JSOG result = JSOG.createValueNode("test");
-        assertEquals("test", result.getValue());
     }
 
     /**
@@ -312,16 +292,6 @@ public class JSOGTest {
         System.out.println("testJSOG_Object");
         JSOG result = new JSOG("test");
         assertEquals("test", result.getValue());
-    }
-
-    /**
-     * Test of createObjectNode method, of class JSOG.
-     */
-    @Test
-    public void testCreateObjectNode() {
-        System.out.println("testCreateObjectNode");
-        JSOG result = JSOG.createObjectNode();
-        assertEquals("{}", result.toString());
     }
 
     /**
@@ -372,16 +342,6 @@ public class JSOGTest {
     }
 
     /**
-     * Test of createArrayNode method, of class JSOG.
-     */
-    @Test
-    public void testCreateArrayNode() {
-        System.out.println("testCreateArrayNode");
-        JSOG result = JSOG.createArrayNode();
-        assertEquals("[]", result.toString());
-    }
-
-    /**
      * Test of array method, of class JSOG.
      */
     @Test
@@ -421,7 +381,7 @@ public class JSOGTest {
     @Test
     public void testIsNull() {
         System.out.println("testIsNull");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         boolean result = instance.isNull();
         assertEquals(true, result);
     }
@@ -432,7 +392,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_null() {
         System.out.println("testIsPrimitive_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertTrue(instance.isPrimitive());
     }
 
@@ -442,7 +402,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_boolean_true() {
         System.out.println("testIsPrimitive_boolean_true");
-        JSOG instance = JSOG.createValueNode(true);
+        JSOG instance = new JSOG(true);
         assertTrue(instance.isPrimitive());
     }
 
@@ -452,7 +412,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_boolean_false() {
         System.out.println("testIsPrimitive_boolean_false");
-        JSOG instance = JSOG.createValueNode(false);
+        JSOG instance = new JSOG(false);
         assertTrue(instance.isPrimitive());
     }
 
@@ -462,7 +422,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_bigDecimal() {
         System.out.println("testIsPrimitive_bigDecimal");
-        JSOG instance = JSOG.createValueNode(BigDecimal.ZERO);
+        JSOG instance = new JSOG(BigDecimal.ZERO);
         assertTrue(instance.isPrimitive());
     }
 
@@ -472,7 +432,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_bigInteger() {
         System.out.println("testIsPrimitive_bigInteger");
-        JSOG instance = JSOG.createValueNode(BigInteger.ZERO);
+        JSOG instance = new JSOG(BigInteger.ZERO);
         assertTrue(instance.isPrimitive());
     }
 
@@ -482,7 +442,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_byte() {
         System.out.println("testIsPrimitive_byte");
-        JSOG instance = JSOG.createValueNode(Byte.MAX_VALUE);
+        JSOG instance = new JSOG(Byte.MAX_VALUE);
         assertTrue(instance.isPrimitive());
     }
 
@@ -492,7 +452,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_char() {
         System.out.println("testIsPrimitive_char");
-        JSOG instance = JSOG.createValueNode(Character.MAX_VALUE);
+        JSOG instance = new JSOG(Character.MAX_VALUE);
         assertTrue(instance.isPrimitive());
     }
 
@@ -502,7 +462,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_short() {
         System.out.println("testIsPrimitive_short");
-        JSOG instance = JSOG.createValueNode(Short.MAX_VALUE);
+        JSOG instance = new JSOG(Short.MAX_VALUE);
         assertTrue(instance.isPrimitive());
     }
 
@@ -512,7 +472,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_int() {
         System.out.println("testIsPrimitive_int");
-        JSOG instance = JSOG.createValueNode(Integer.MAX_VALUE);
+        JSOG instance = new JSOG(Integer.MAX_VALUE);
         assertTrue(instance.isPrimitive());
     }
 
@@ -522,7 +482,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_long() {
         System.out.println("testIsPrimitive_long");
-        JSOG instance = JSOG.createValueNode(Long.MAX_VALUE);
+        JSOG instance = new JSOG(Long.MAX_VALUE);
         assertTrue(instance.isPrimitive());
     }
 
@@ -532,7 +492,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_float() {
         System.out.println("testIsPrimitive_float");
-        JSOG instance = JSOG.createValueNode(Float.MAX_VALUE);
+        JSOG instance = new JSOG(Float.MAX_VALUE);
         assertTrue(instance.isPrimitive());
     }
 
@@ -542,7 +502,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_double() {
         System.out.println("testIsPrimitive_double");
-        JSOG instance = JSOG.createValueNode(Double.MAX_VALUE);
+        JSOG instance = new JSOG(Double.MAX_VALUE);
         assertTrue(instance.isPrimitive());
     }
 
@@ -552,7 +512,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_string() {
         System.out.println("testIsPrimitive_string");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         assertTrue(instance.isPrimitive());
     }
 
@@ -562,7 +522,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_string_empty() {
         System.out.println("testIsPrimitive_string_empty");
-        JSOG instance = JSOG.createValueNode("");
+        JSOG instance = new JSOG("");
         assertTrue(instance.isPrimitive());
     }
 
@@ -572,7 +532,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_array() {
         System.out.println("testIsPrimitive_array");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         assertFalse(instance.isPrimitive());
     }
 
@@ -582,7 +542,7 @@ public class JSOGTest {
     @Test
     public void testIsPrimitive_object() {
         System.out.println("testIsPrimitive_object");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         assertFalse(instance.isPrimitive());
     }
 
@@ -592,7 +552,7 @@ public class JSOGTest {
     @Test
     public void testIsArray_true() {
         System.out.println("testIsArray_true");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         assertTrue(instance.isArray());
     }
 
@@ -602,7 +562,7 @@ public class JSOGTest {
     @Test
     public void testIsArray_falseNull() {
         System.out.println("testIsArray_falseNull");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
         assertFalse(instance.isArray());
     }
 
@@ -612,7 +572,7 @@ public class JSOGTest {
     @Test
     public void testIsArray_falseObject() {
         System.out.println("testIsArray_falseObject");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         assertFalse(instance.isArray());
     }
 
@@ -622,7 +582,7 @@ public class JSOGTest {
     @Test
     public void testIsArray_falseString() {
         System.out.println("testIsArray_falseString");
-        JSOG instance = JSOG.createValueNode("");
+        JSOG instance = new JSOG("");
         assertFalse(instance.isArray());
     }
 
@@ -632,7 +592,7 @@ public class JSOGTest {
     @Test
     public void testIsObject_true() {
         System.out.println("testIsObject_true");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         assertTrue(instance.isObject());
     }
 
@@ -642,7 +602,7 @@ public class JSOGTest {
     @Test
     public void testIsObject_falseNull() {
         System.out.println("testIsObject_falseNull");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
         assertFalse(instance.isObject());
     }
 
@@ -652,7 +612,7 @@ public class JSOGTest {
     @Test
     public void testIsObject_falseArray() {
         System.out.println("testIsArray_falseArray");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         assertFalse(instance.isObject());
     }
 
@@ -662,7 +622,7 @@ public class JSOGTest {
     @Test
     public void testIsObject_falseString() {
         System.out.println("testIsObject_falseString");
-        JSOG instance = JSOG.createValueNode("");
+        JSOG instance = new JSOG("");
         assertFalse(instance.isObject());
     }
 
@@ -672,7 +632,7 @@ public class JSOGTest {
     @Test
     public void testAdd() {
         System.out.println("testAdd");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance.add(true);
         instance.add(false);
         assertEquals(true, instance.get(0).getValue());
@@ -685,7 +645,7 @@ public class JSOGTest {
     @Test
     public void testAdd_chain() {
         System.out.println("testAdd_chain");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance
                 .add(true)
                 .add(false);
@@ -699,7 +659,7 @@ public class JSOGTest {
     @Test
     public void testAdd_null() {
         System.out.println("testAdd_null");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance.add(null);
         assertNull(instance.get(0).getValue());
     }
@@ -721,7 +681,7 @@ public class JSOGTest {
     @Test
     public void testAdd_primitiveJsog() {
         System.out.println("testAdd_valueIsPrimitive");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         instance.add(null);
         assertNull(instance.get(0).getValue());
     }
@@ -732,7 +692,7 @@ public class JSOGTest {
     @Test
     public void testAdd_objectJsog() {
         System.out.println("testAdd_objectJsog");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.add(null);
         assertNull(instance.get(0).getValue());
     }
@@ -766,7 +726,7 @@ public class JSOGTest {
     @Test
     public void testAddWithIndex() {
         System.out.println("testAddWithIndex");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance.add(0, true);
         instance.add(1, false);
         assertEquals(true, instance.get(0).getValue());
@@ -779,7 +739,7 @@ public class JSOGTest {
     @Test(expected=IndexOutOfBoundsException.class)
     public void testAddWithIndexOutOfRange() {
         System.out.println("testAddWithIndexOutOfRange");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
 
         instance.add(1, null);
         fail("Expected an exception.");
@@ -791,7 +751,7 @@ public class JSOGTest {
     @Test
     public void testAddWithIndex_chain() {
         System.out.println("testAddWithIndex_chain");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance.add(0, true)
                 .add(1, false);
         assertEquals(true, instance.get(0).getValue());
@@ -815,7 +775,7 @@ public class JSOGTest {
     @Test
     public void testAddWithIndex_objectJsog() {
         System.out.println("testAddWithIndex_objectJsog");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.add(0, null);
         assertNull(instance.get(0).getValue());
     }
@@ -826,7 +786,7 @@ public class JSOGTest {
     @Test
     public void testAddWithIndex_primitiveJsog() {
         System.out.println("testAddWithIndex_primitiveJsog");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         instance.add(0, null);
         assertNull(instance.get(0).getValue());
     }
@@ -837,7 +797,7 @@ public class JSOGTest {
     @Test
     public void testAddWithIndex_null() {
         System.out.println("testAddWithIndex_null");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance.add(0, null);
         assertNull(instance.get(0).getValue());
     }
@@ -1013,7 +973,7 @@ public class JSOGTest {
     @Test
     public void testHasKey_Enum() {
         System.out.println("testHasKey_Enum");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put(TestEnum.foo, null);
         assertTrue(instance.hasKey(TestEnum.foo));
     }
@@ -1024,7 +984,7 @@ public class JSOGTest {
     @Test
     public void testHasKey_Enum_null() {
         System.out.println("testHasKey_Enum_null");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put((TestEnum) null, null);
         assertTrue(instance.hasKey((TestEnum) null));
     }
@@ -1045,7 +1005,7 @@ public class JSOGTest {
     @Test
     public void testHasKey_array() {
         System.out.println("testHasKey_array");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         try {
             instance.hasKey("test");
             fail("Expected an exception.");
@@ -1060,7 +1020,7 @@ public class JSOGTest {
     @Test
     public void testHasKey_value() {
         System.out.println("testHasKey_value");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.hasKey("test");
             fail("Expected an exception.");
@@ -1075,7 +1035,7 @@ public class JSOGTest {
     @Test
     public void testHasKey_objectFalse() {
         System.out.println("testHasKey_objectFalse");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         assertFalse(instance.hasKey("test"));
     }
 
@@ -1085,7 +1045,7 @@ public class JSOGTest {
     @Test
     public void testHasKey_objectTrue() {
         System.out.println("testHasKey_objectTrue");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put("test", null);
         assertTrue(instance.hasKey("test"));
     }
@@ -1096,7 +1056,7 @@ public class JSOGTest {
     @Test
     public void testRemove_Enum() {
         System.out.println("testRemove_Enum");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put(TestEnum.foo, "bar");
         Object result = instance.remove(TestEnum.foo);
         assertEquals("bar", result);
@@ -1108,7 +1068,7 @@ public class JSOGTest {
     @Test
     public void testRemove_Enum_null() {
         System.out.println("testRemove_Enum_null");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put((TestEnum) null, "bar");
         Object result = instance.remove((TestEnum) null);
         assertEquals("bar", result);
@@ -1120,7 +1080,7 @@ public class JSOGTest {
     @Test
     public void testRemove_Object_NotAnObject() {
         System.out.println("testRemove_Object_NotAnObject");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         try {
             instance.remove("test");
             fail("Expected an exception.");
@@ -1135,7 +1095,7 @@ public class JSOGTest {
     @Test
     public void testRemove_Object_contains() {
         System.out.println("testRemove_Object_contains");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put("foo", "bar");
         Object result = instance.remove("foo");
         assertEquals("bar", result);
@@ -1147,7 +1107,7 @@ public class JSOGTest {
     @Test
     public void testRemove_Object_doesNotContain() {
         System.out.println("testRemove_Object_doesNotContain");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         Object result = instance.remove("foo");
         assertNull(result);
     }
@@ -1158,7 +1118,7 @@ public class JSOGTest {
     @Test
     public void testRemove_int_NotAnArray() {
         System.out.println("testRemove_int_NotAnArray");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         try {
             instance.remove(1);
             fail("Expected an exception.");
@@ -1173,7 +1133,7 @@ public class JSOGTest {
     @Test
     public void testRemove_int_contains() {
         System.out.println("testRemove_int_contains");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         String expected = "test";
 
         instance.add(expected);
@@ -1187,7 +1147,7 @@ public class JSOGTest {
     @Test
     public void testRemove_int_doesNotContain() {
         System.out.println("testRemove_int_doesNotContain");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
 
         try {
             instance.remove(0);
@@ -1236,7 +1196,7 @@ public class JSOGTest {
     @Test
     public void testPut() {
         System.out.println("testPut");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put("foo", "bar");
         instance.put("baz", "qux");
         assertEquals("bar", instance.get("foo").getValue());
@@ -1249,7 +1209,7 @@ public class JSOGTest {
     @Test
     public void testPut_Enum() {
         System.out.println("testPut_Enum");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put(TestEnum.foo, "bar");
         instance.put(TestEnum.baz, "qux");
         assertEquals("bar", instance.get(TestEnum.foo).getValue());
@@ -1262,7 +1222,7 @@ public class JSOGTest {
     @Test
     public void testPut_Enum_null() {
         System.out.println("testPut_Enum_null");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put((TestEnum) null, "bar");
         assertEquals("bar", instance.get((TestEnum) null).getValue());
     }
@@ -1273,14 +1233,14 @@ public class JSOGTest {
     @Test
     public void testPut_notObject() {
         System.out.println("testPut_notObject");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
         instance.put("foo", null);
         assertEquals(null, instance.get("foo").getValue());
     }
 
     public void testPut_valueIsPrimitive() {
         System.out.println("testPut_valueIsPrimitive");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         instance.put("foo", null);
         assertEquals(null, instance.get("foo").getValue());
     }
@@ -1291,7 +1251,7 @@ public class JSOGTest {
     @Test
     public void testPut_valueIsArray() {
         System.out.println("testPut_valueIsArray");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance.put("foo", null);
         assertEquals(null, instance.get("foo").getValue());
     }
@@ -1302,7 +1262,7 @@ public class JSOGTest {
     @Test
     public void testPut_null() {
         System.out.println("testPut_null");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put("foo", null);
         assertEquals(null, instance.get("foo").getValue());
     }
@@ -1313,7 +1273,7 @@ public class JSOGTest {
     @Test
     public void testPut_chain() {
         System.out.println("testPut_chain");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance
                 .put("foo", "bar")
                 .put("baz", "qux");
@@ -1330,7 +1290,7 @@ public class JSOGTest {
     @Test
     public void testPut_invalid() {
         System.out.println("testSet_object");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         try {
             instance.put("test", new Object());
             fail("Expected an exception");
@@ -1363,7 +1323,7 @@ public class JSOGTest {
     @Test
     public void testSet() {
         System.out.println("testSet");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
         instance.set("test");
         assertEquals("test", instance.getValue());
     }
@@ -1374,7 +1334,7 @@ public class JSOGTest {
     @Test
     public void testSet_null() {
         System.out.println("testSet_null");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         instance.set(null);
         assertEquals(null, instance.getValue());
     }
@@ -1387,7 +1347,7 @@ public class JSOGTest {
     @Test
     public void testSet_coerceArray() {
         System.out.println("testSet_coerceArray");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance.set("test");
         assertEquals("test", instance.getValue());
     }
@@ -1400,7 +1360,7 @@ public class JSOGTest {
     @Test
     public void testSet_coerceObject() {
         System.out.println("testSet_coerceObject");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.set("test");
         assertEquals("test", instance.getValue());
     }
@@ -1411,8 +1371,8 @@ public class JSOGTest {
     @Test
     public void testSet_jsog() {
         System.out.println("testSet_jsog");
-        JSOG value = JSOG.createArrayNode();
-        JSOG instance = JSOG.createValueNode();
+        JSOG value = JSOG.array();
+        JSOG instance = new JSOG();
         instance.set(value);
         assertSame(value, instance.getValue());
     }
@@ -1426,7 +1386,7 @@ public class JSOGTest {
     @Test
     public void testSet_invalid() {
         System.out.println("testSet_invalid");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
         try {
             instance.set(new Object());
             fail("Expected an exception");
@@ -1441,7 +1401,7 @@ public class JSOGTest {
     @Test
     public void testSize_objectZero() {
         System.out.println("testSize_objectZero");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         assertEquals(0, instance.size());
     }
 
@@ -1451,7 +1411,7 @@ public class JSOGTest {
     @Test
     public void testSize_objectOne() {
         System.out.println("testSize_objectOne");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put("test", null);
         assertEquals(1, instance.size());
     }
@@ -1462,7 +1422,7 @@ public class JSOGTest {
     @Test
     public void testSize_arrayZero() {
         System.out.println("testSize_arrayZero");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         assertEquals(0, instance.size());
     }
 
@@ -1472,7 +1432,7 @@ public class JSOGTest {
     @Test
     public void testSize_arrayOne() {
         System.out.println("testSize_arrayOne");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         assertEquals(0, instance.size());
     }
 
@@ -1482,7 +1442,7 @@ public class JSOGTest {
     @Test
     public void testSize_null() {
         System.out.println("testSize_null");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
         try {
             instance.size();
             fail("Expected an exception");
@@ -1497,7 +1457,7 @@ public class JSOGTest {
     @Test
     public void testGet_Enum() {
         System.out.println("testGet_Enum");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.get(TestEnum.foo).set("bar");
         assertEquals("bar", instance.get(TestEnum.foo).getValue());
     }
@@ -1508,7 +1468,7 @@ public class JSOGTest {
     @Test
     public void testGet_Enum_null() {
         System.out.println("testGet_Enum_null");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.get((TestEnum) null).set("bar");
         assertEquals("bar", instance.get((TestEnum) null).getValue());
     }
@@ -1519,7 +1479,7 @@ public class JSOGTest {
     @Test
     public void testGet_String() {
         System.out.println("testGet_String");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.get("foo").set("bar");
         assertEquals("bar", instance.get("foo").getValue());
     }
@@ -1544,7 +1504,7 @@ public class JSOGTest {
     @Test
     public void testGet_String_existsNotAnObject() {
         System.out.println("testGet_String_existsNotAnObject");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         try {
             instance.get("foo").set("bar");
             fail("Expected an exception.");
@@ -1561,7 +1521,7 @@ public class JSOGTest {
     @Test
     public void testGet_String_same() {
         System.out.println("testGet_String_Same");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         assertSame(instance.get("test"), instance.get("test"));
     }
 
@@ -1573,7 +1533,7 @@ public class JSOGTest {
     @Test
     public void testGet_String_chain() {
         System.out.println("testGet_String_chain");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         instance.get("foo").get("bar").get("baz").get("qux").set("quux");
         assertEquals("quux", instance.get("foo").get("bar").get("baz").get("qux").getValue());
     }
@@ -1586,7 +1546,7 @@ public class JSOGTest {
     @Test
     public void testGet_String_chainExists() {
         System.out.println("testGet_String_chainExists");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.get("foo").add("bar");
         instance.get("foo").add("baz");
         assertEquals("bar", instance.get("foo").get(0).getValue());
@@ -1599,7 +1559,7 @@ public class JSOGTest {
     @Test
     public void testGet_int() {
         System.out.println("testGet_int");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         instance.add("test");
         assertEquals("test", instance.get(0).getValue());
     }
@@ -1610,8 +1570,8 @@ public class JSOGTest {
     @Test
     public void testGet_int_Json() {
         System.out.println("testGet_int_Json");
-        JSOG instance = JSOG.createArrayNode();
-        JSOG value = JSOG.createObjectNode();
+        JSOG instance = JSOG.array();
+        JSOG value = JSOG.object();
         instance.add(value);
         assertSame(value, instance.get(0));
     }
@@ -1622,7 +1582,7 @@ public class JSOGTest {
     @Test
     public void testGet_int_null() {
         System.out.println("testGet_int_notAnArray");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
         try {
             instance.get(0).getValue();
             fail("Expected an exception.");
@@ -1637,7 +1597,7 @@ public class JSOGTest {
     @Test
     public void testGet_int_valueIsPrimitive() {
         System.out.println("testGet_int_valueIsPrimitive");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         try {
             instance.get(0).getValue();
             fail("Expected an exception.");
@@ -1652,7 +1612,7 @@ public class JSOGTest {
     @Test
     public void testGet_int_valueIsObject() {
         System.out.println("testGet_int_valueIsPrimitive");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         try {
             instance.get(0).getValue();
             fail("Expected an exception.");
@@ -1669,7 +1629,7 @@ public class JSOGTest {
     @Test
     public void testGet_int_outOfBounds() {
         System.out.println("testGet_int_outOfBounds");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         try {
             instance.get(0).getValue();
             fail("Expected an exception");
@@ -1684,7 +1644,7 @@ public class JSOGTest {
     @Test
     public void testGetValue() {
         System.out.println("testGetValue");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getValue());
     }
 
@@ -1696,8 +1656,8 @@ public class JSOGTest {
     @Test
     public void testGetValue_wrapped() {
         System.out.println("testGetValue_wrapped");
-        JSOG value = JSOG.createValueNode("test");
-        JSOG instance = JSOG.createValueNode(value);
+        JSOG value = new JSOG("test");
+        JSOG instance = new JSOG(value);
 
         assertSame(value, instance.getValue());
     }
@@ -1710,7 +1670,7 @@ public class JSOGTest {
     @Test
     public void testGetValue_array() {
         System.out.println("testGetValue_array");
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
 
         try {
             instance.getValue();
@@ -1728,7 +1688,7 @@ public class JSOGTest {
     @Test
     public void testGetValue_object() {
         System.out.println("testGetValue_object");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
 
         try {
             instance.getValue();
@@ -1744,7 +1704,7 @@ public class JSOGTest {
     @Test
     public void testGetBigDecimalValue() {
         System.out.println("testGetBigDecimalValue");
-        JSOG instance = JSOG.createValueNode(BigDecimal.ZERO);
+        JSOG instance = new JSOG(BigDecimal.ZERO);
 
         assertEquals(BigDecimal.ZERO, instance.getBigDecimalValue());
     }
@@ -1755,7 +1715,7 @@ public class JSOGTest {
     @Test
     public void testGetBigDecimalValue_null() {
         System.out.println("testGetBigDecimalValue_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getBigDecimalValue());
     }
 
@@ -1765,7 +1725,7 @@ public class JSOGTest {
     @Test
     public void testGetBigDecimalValue_int() {
         System.out.println("testGetBigDecimalValue_int");
-        JSOG instance = JSOG.createValueNode(1);
+        JSOG instance = new JSOG(1);
 
         assertEquals(BigDecimal.valueOf(1), instance.getBigDecimalValue());
     }
@@ -1776,7 +1736,7 @@ public class JSOGTest {
     @Test
     public void testGetBigDecimalValue_float() {
         System.out.println("testGetBigDecimalValue_float");
-        JSOG instance = JSOG.createValueNode(new Float(1.0));
+        JSOG instance = new JSOG(new Float(1.0));
 
         assertEquals(BigDecimal.valueOf(1.0), instance.getBigDecimalValue());
     }
@@ -1787,7 +1747,7 @@ public class JSOGTest {
     @Test
     public void testGetBigDecimalValue_double() {
         System.out.println("testGetBigDecimalValue_double");
-        JSOG instance = JSOG.createValueNode(new Double(1.0));
+        JSOG instance = new JSOG(new Double(1.0));
 
         assertEquals(BigDecimal.valueOf(1.0), instance.getBigDecimalValue());
     }
@@ -1798,7 +1758,7 @@ public class JSOGTest {
     @Test
     public void testGetBigDecimalValue_string() {
         System.out.println("testGetBigDecimalValue_string");
-        JSOG instance = JSOG.createValueNode("1.0");
+        JSOG instance = new JSOG("1.0");
 
         assertEquals(BigDecimal.valueOf(1.0), instance.getBigDecimalValue());
     }
@@ -1809,7 +1769,7 @@ public class JSOGTest {
     @Test
     public void testGetBigDecimalValue_other() {
         System.out.println("testGetBigDecimalValue_other");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.getBigDecimalValue();
             fail("Expected an exception");
@@ -1822,7 +1782,7 @@ public class JSOGTest {
     @Test
     public void testGetBigIntegerValue() {
         System.out.println("testGetBigIntegerValue");
-        JSOG instance = JSOG.createValueNode(BigInteger.ZERO);
+        JSOG instance = new JSOG(BigInteger.ZERO);
 
         assertEquals(BigInteger.ZERO, instance.getBigIntegerValue());
     }
@@ -1833,7 +1793,7 @@ public class JSOGTest {
     @Test
     public void testGetBigIntegerValue_null() {
         System.out.println("testGetBigIntegerValue_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getBigIntegerValue());
     }
 
@@ -1843,7 +1803,7 @@ public class JSOGTest {
     @Test
     public void testGetBigIntegerValue_float() {
         System.out.println("testGetBigIntegerValue_float");
-        JSOG instance = JSOG.createValueNode(new Float(1.0));
+        JSOG instance = new JSOG(new Float(1.0));
 
         assertEquals(BigInteger.valueOf(1), instance.getBigIntegerValue());
     }
@@ -1854,7 +1814,7 @@ public class JSOGTest {
     @Test
     public void testGetBigIntegerValue_double() {
         System.out.println("testGetBigIntegerValue_double");
-        JSOG instance = JSOG.createValueNode(new Double(1.0));
+        JSOG instance = new JSOG(new Double(1.0));
 
         assertEquals(BigInteger.valueOf(1), instance.getBigIntegerValue());
     }
@@ -1865,7 +1825,7 @@ public class JSOGTest {
     @Test
     public void testGetBigIntegerValue_string() {
         System.out.println("testGetBigIntegerValue_string");
-        JSOG instance = JSOG.createValueNode("1");
+        JSOG instance = new JSOG("1");
 
         assertEquals(BigInteger.valueOf(1), instance.getBigIntegerValue());
     }
@@ -1876,7 +1836,7 @@ public class JSOGTest {
     @Test
     public void testGetBigIntegerValue_other() {
         System.out.println("testGetBigIntegerValue_other");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.getBigIntegerValue();
             fail("Expected an exception");
@@ -1889,7 +1849,7 @@ public class JSOGTest {
     @Test
     public void testGetByteValue() {
         System.out.println("testGetByteValue");
-        JSOG instance = JSOG.createValueNode(Byte.MAX_VALUE);
+        JSOG instance = new JSOG(Byte.MAX_VALUE);
 
         assertEquals(Byte.valueOf(Byte.MAX_VALUE), instance.getByteValue());
     }
@@ -1900,7 +1860,7 @@ public class JSOGTest {
     @Test
     public void testGetByteValue_null() {
         System.out.println("testGetByteValue_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getByteValue());
     }
 
@@ -1910,7 +1870,7 @@ public class JSOGTest {
     @Test
     public void testGetByteValue_float() {
         System.out.println("testGetByteValue_float");
-        JSOG instance = JSOG.createValueNode(new Float(1.0));
+        JSOG instance = new JSOG(new Float(1.0));
 
         assertEquals(Byte.valueOf((byte) 1), instance.getByteValue());
     }
@@ -1921,7 +1881,7 @@ public class JSOGTest {
     @Test
     public void testGetByteValue_double() {
         System.out.println("testGetByteValue_double");
-        JSOG instance = JSOG.createValueNode(new Double(1.0));
+        JSOG instance = new JSOG(new Double(1.0));
 
         assertEquals(Byte.valueOf((byte) 1), instance.getByteValue());
     }
@@ -1932,7 +1892,7 @@ public class JSOGTest {
     @Test
     public void testGetByteValue_string() {
         System.out.println("testGetByteValue_string");
-        JSOG instance = JSOG.createValueNode("1");
+        JSOG instance = new JSOG("1");
 
         assertEquals(Byte.valueOf((byte) 1), instance.getByteValue());
     }
@@ -1943,7 +1903,7 @@ public class JSOGTest {
     @Test
     public void testGetByteValue_other() {
         System.out.println("testGetByteValue_other");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.getByteValue();
             fail("Expected an exception");
@@ -1956,7 +1916,7 @@ public class JSOGTest {
     @Test
     public void testGetShortValue() {
         System.out.println("testGetShortValue");
-        JSOG instance = JSOG.createValueNode(Short.MAX_VALUE);
+        JSOG instance = new JSOG(Short.MAX_VALUE);
 
         assertEquals(Short.valueOf(Short.MAX_VALUE), instance.getShortValue());
     }
@@ -1967,7 +1927,7 @@ public class JSOGTest {
     @Test
     public void testGetShortValue_null() {
         System.out.println("testGetShortValue_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getShortValue());
     }
 
@@ -1977,7 +1937,7 @@ public class JSOGTest {
     @Test
     public void testGetShortValue_float() {
         System.out.println("testGetShortValue_float");
-        JSOG instance = JSOG.createValueNode(new Float(1.0));
+        JSOG instance = new JSOG(new Float(1.0));
 
         assertEquals(Short.valueOf((short) 1), instance.getShortValue());
     }
@@ -1988,7 +1948,7 @@ public class JSOGTest {
     @Test
     public void testGetShortValue_double() {
         System.out.println("testGetShortValue_double");
-        JSOG instance = JSOG.createValueNode(new Double(1.0));
+        JSOG instance = new JSOG(new Double(1.0));
 
         assertEquals(Short.valueOf((short) 1), instance.getShortValue());
     }
@@ -1999,7 +1959,7 @@ public class JSOGTest {
     @Test
     public void testGetShortValue_string() {
         System.out.println("testGetShortValue_string");
-        JSOG instance = JSOG.createValueNode("1");
+        JSOG instance = new JSOG("1");
 
         assertEquals(Short.valueOf((short) 1), instance.getShortValue());
     }
@@ -2010,7 +1970,7 @@ public class JSOGTest {
     @Test
     public void testGetShortValue_other() {
         System.out.println("testGetShortValue_other");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.getShortValue();
             fail("Expected an exception");
@@ -2023,7 +1983,7 @@ public class JSOGTest {
     @Test
     public void testGetIntegerValue() {
         System.out.println("testGetIntegerValue");
-        JSOG instance = JSOG.createValueNode(Integer.MAX_VALUE);
+        JSOG instance = new JSOG(Integer.MAX_VALUE);
 
         assertEquals(Integer.valueOf(Integer.MAX_VALUE), instance.getIntegerValue());
     }
@@ -2034,7 +1994,7 @@ public class JSOGTest {
     @Test
     public void testGetIntegerValue_null() {
         System.out.println("testGetIntegerValue_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getIntegerValue());
     }
 
@@ -2044,7 +2004,7 @@ public class JSOGTest {
     @Test
     public void testGetIntegerValue_float() {
         System.out.println("testGetIntegerValue_float");
-        JSOG instance = JSOG.createValueNode(new Float(1.0));
+        JSOG instance = new JSOG(new Float(1.0));
 
         assertEquals(Integer.valueOf(1), instance.getIntegerValue());
     }
@@ -2055,7 +2015,7 @@ public class JSOGTest {
     @Test
     public void testGetIntegerValue_double() {
         System.out.println("testGetIntegerValue_double");
-        JSOG instance = JSOG.createValueNode(new Double(1.0));
+        JSOG instance = new JSOG(new Double(1.0));
 
         assertEquals(Integer.valueOf(1), instance.getIntegerValue());
     }
@@ -2066,7 +2026,7 @@ public class JSOGTest {
     @Test
     public void testGetIntegerValue_string() {
         System.out.println("testGetIntegerValue_string");
-        JSOG instance = JSOG.createValueNode("1");
+        JSOG instance = new JSOG("1");
 
         assertEquals(Integer.valueOf(1), instance.getIntegerValue());
     }
@@ -2077,7 +2037,7 @@ public class JSOGTest {
     @Test
     public void testGetIntegerValue_other() {
         System.out.println("testGetIntegerValue_other");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.getIntegerValue();
             fail("Expected an exception");
@@ -2090,7 +2050,7 @@ public class JSOGTest {
     @Test
     public void testGetLongValue() {
         System.out.println("testGetLongValue");
-        JSOG instance = JSOG.createValueNode(Long.MAX_VALUE);
+        JSOG instance = new JSOG(Long.MAX_VALUE);
 
         assertEquals(Long.valueOf(Long.MAX_VALUE), instance.getLongValue());
     }
@@ -2101,7 +2061,7 @@ public class JSOGTest {
     @Test
     public void testGetLongValue_null() {
         System.out.println("testGetLongValue_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getLongValue());
     }
 
@@ -2111,7 +2071,7 @@ public class JSOGTest {
     @Test
     public void testGetLongValue_float() {
         System.out.println("testGetLongValue_float");
-        JSOG instance = JSOG.createValueNode(new Float(1.0));
+        JSOG instance = new JSOG(new Float(1.0));
 
         assertEquals(Long.valueOf(1), instance.getLongValue());
     }
@@ -2122,7 +2082,7 @@ public class JSOGTest {
     @Test
     public void testGetLongValue_double() {
         System.out.println("testGetLongValue_double");
-        JSOG instance = JSOG.createValueNode(new Double(1.0));
+        JSOG instance = new JSOG(new Double(1.0));
 
         assertEquals(Long.valueOf(1), instance.getLongValue());
     }
@@ -2133,7 +2093,7 @@ public class JSOGTest {
     @Test
     public void testGetLongValue_string() {
         System.out.println("testGetLongValue_string");
-        JSOG instance = JSOG.createValueNode("1");
+        JSOG instance = new JSOG("1");
 
         assertEquals(Long.valueOf(1), instance.getLongValue());
     }
@@ -2144,7 +2104,7 @@ public class JSOGTest {
     @Test
     public void testGetLongValue_other() {
         System.out.println("testGetLongValue_other");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.getLongValue();
             fail("Expected an exception");
@@ -2157,7 +2117,7 @@ public class JSOGTest {
     @Test
     public void testGetFloatValue() {
         System.out.println("testGetFloatValue");
-        JSOG instance = JSOG.createValueNode(Float.MAX_VALUE);
+        JSOG instance = new JSOG(Float.MAX_VALUE);
 
         assertEquals(Float.valueOf(Float.MAX_VALUE), instance.getFloatValue());
     }
@@ -2168,7 +2128,7 @@ public class JSOGTest {
     @Test
     public void testGetFloatValue_null() {
         System.out.println("testGetFloatValue_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getFloatValue());
     }
 
@@ -2178,7 +2138,7 @@ public class JSOGTest {
     @Test
     public void testGetFloatValue_float() {
         System.out.println("testGetFloatValue_float");
-        JSOG instance = JSOG.createValueNode(new Float(1.0));
+        JSOG instance = new JSOG(new Float(1.0));
 
         assertEquals(Float.valueOf(1), instance.getFloatValue());
     }
@@ -2189,7 +2149,7 @@ public class JSOGTest {
     @Test
     public void testGetFloatValue_double() {
         System.out.println("testGetFloatValue_double");
-        JSOG instance = JSOG.createValueNode(new Double(1.0));
+        JSOG instance = new JSOG(new Double(1.0));
 
         assertEquals(Float.valueOf(1), instance.getFloatValue());
     }
@@ -2200,7 +2160,7 @@ public class JSOGTest {
     @Test
     public void testGetFloatValue_string() {
         System.out.println("testGetFloatValue_string");
-        JSOG instance = JSOG.createValueNode("1");
+        JSOG instance = new JSOG("1");
 
         assertEquals(Float.valueOf(1), instance.getFloatValue());
     }
@@ -2211,7 +2171,7 @@ public class JSOGTest {
     @Test
     public void testGetFloatValue_other() {
         System.out.println("testGetFloatValue_other");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.getFloatValue();
             fail("Expected an exception");
@@ -2224,7 +2184,7 @@ public class JSOGTest {
     @Test
     public void testGetDoubleValue() {
         System.out.println("testGetDoubleValue");
-        JSOG instance = JSOG.createValueNode(Double.MAX_VALUE);
+        JSOG instance = new JSOG(Double.MAX_VALUE);
 
         assertEquals(Double.valueOf(Double.MAX_VALUE), instance.getDoubleValue());
     }
@@ -2235,7 +2195,7 @@ public class JSOGTest {
     @Test
     public void testGetDoubleValue_null() {
         System.out.println("testGetDoubleValue_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertNull(instance.getDoubleValue());
     }
 
@@ -2245,7 +2205,7 @@ public class JSOGTest {
     @Test
     public void testGetDoubleValue_float() {
         System.out.println("testGetDoubleValue_float");
-        JSOG instance = JSOG.createValueNode(new Float(1.0));
+        JSOG instance = new JSOG(new Float(1.0));
 
         assertEquals(Double.valueOf(1), instance.getDoubleValue());
     }
@@ -2256,7 +2216,7 @@ public class JSOGTest {
     @Test
     public void testGetDoubleValue_double() {
         System.out.println("testGetDoubleValue_double");
-        JSOG instance = JSOG.createValueNode(new Double(1.0));
+        JSOG instance = new JSOG(new Double(1.0));
 
         assertEquals(Double.valueOf(1), instance.getDoubleValue());
     }
@@ -2267,7 +2227,7 @@ public class JSOGTest {
     @Test
     public void testGetDoubleValue_string() {
         System.out.println("testGetDoubleValue_string");
-        JSOG instance = JSOG.createValueNode("1");
+        JSOG instance = new JSOG("1");
 
         assertEquals(Double.valueOf(1), instance.getDoubleValue());
     }
@@ -2278,7 +2238,7 @@ public class JSOGTest {
     @Test
     public void testGetDoubleValue_other() {
         System.out.println("testGetDoubleValue_other");
-        JSOG instance = JSOG.createValueNode("foo");
+        JSOG instance = new JSOG("foo");
         try {
             instance.getDoubleValue();
             fail("Expected an exception");
@@ -2291,7 +2251,7 @@ public class JSOGTest {
     @Test
     public void testGetStringValue_null() {
         System.out.println("testGetStringValue_null");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
 
         assertEquals(null, instance.getStringValue());
     }
@@ -2302,7 +2262,7 @@ public class JSOGTest {
     @Test
     public void testGetStringValue_string() {
         System.out.println("testGetStringValue_string");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
 
         assertEquals("test", instance.getStringValue());
     }
@@ -2313,7 +2273,7 @@ public class JSOGTest {
     @Test
     public void testGetStringValue_other() {
         System.out.println("testGetStringValue_other");
-        JSOG instance = JSOG.createValueNode(1);
+        JSOG instance = new JSOG(1);
         assertEquals("1", instance.getStringValue());
     }
 
@@ -2323,7 +2283,7 @@ public class JSOGTest {
     @Test
     public void testGetBooleanValue_null() {
         System.out.println("testGetBooleanValue_null");
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
 
         assertNull(instance.getBooleanValue());
     }
@@ -2334,7 +2294,7 @@ public class JSOGTest {
     @Test
     public void testGetBooleanValue_stringTrue() {
         System.out.println("testGetBooleanValue_stringTrue");
-        JSOG instance = JSOG.createValueNode("true");
+        JSOG instance = new JSOG("true");
 
         assertTrue(instance.getBooleanValue());
     }
@@ -2345,7 +2305,7 @@ public class JSOGTest {
     @Test
     public void testGetBooleanValue_stringTrueCaseInsensitive() {
         System.out.println("testGetBooleanValue_stringTrueCaseInsensitive");
-        JSOG instance = JSOG.createValueNode("True");
+        JSOG instance = new JSOG("True");
 
         assertTrue(instance.getBooleanValue());
     }
@@ -2356,7 +2316,7 @@ public class JSOGTest {
     @Test
     public void testGetBooleanValue_stringFalse() {
         System.out.println("testGetBooleanValue_stringFalse");
-        JSOG instance = JSOG.createValueNode("false");
+        JSOG instance = new JSOG("false");
 
         assertFalse(instance.getBooleanValue());
     }
@@ -2367,7 +2327,7 @@ public class JSOGTest {
     @Test
     public void testGetBooleanValue_booleanTrue() {
         System.out.println("testGetBooleanValue_booleanTrue");
-        JSOG instance = JSOG.createValueNode(true);
+        JSOG instance = new JSOG(true);
         assertTrue(instance.getBooleanValue());
     }
 
@@ -2377,7 +2337,7 @@ public class JSOGTest {
     @Test
     public void testGetBooleanValue_booleanFalse() {
         System.out.println("testGetBooleanValue_booleanFalse");
-        JSOG instance = JSOG.createValueNode(true);
+        JSOG instance = new JSOG(true);
         assertTrue(instance.getBooleanValue());
     }
 
@@ -2389,7 +2349,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_primitiveNull() {
         System.out.println("testToJsonNode_primitiveNull");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertEquals(om.getNodeFactory().nullNode(), instance.toJsonNode());
     }
 
@@ -2399,7 +2359,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_primitiveNumber() {
         System.out.println("testToJsonNode_primitiveNumber");
-        JSOG instance = JSOG.createValueNode(123);
+        JSOG instance = new JSOG(123);
         assertEquals(om.getNodeFactory().numberNode(123), instance.toJsonNode());
     }
 
@@ -2409,7 +2369,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_primitiveString() {
         System.out.println("testToJsonNode_primitiveString");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         assertEquals(om.getNodeFactory().textNode("test"), instance.toJsonNode());
     }
 
@@ -2419,8 +2379,8 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_jsog() {
         System.out.println("testToJsonNode_jsog");
-        JSOG value = JSOG.createObjectNode();
-        JSOG instance = JSOG.createValueNode(value);
+        JSOG value = JSOG.object();
+        JSOG instance = new JSOG(value);
 
         assertEquals(om.getNodeFactory().objectNode(), instance.toJsonNode());
     }
@@ -2431,7 +2391,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_null() {
         System.out.println("testToJsonNode_null");
-        JSOG instance = JSOG.createValueNode(null);
+        JSOG instance = new JSOG(null);
         assertEquals(om.getNodeFactory().nullNode(), instance.toJsonNode());
     }
 
@@ -2441,7 +2401,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_boolean_true() {
         System.out.println("testToJsonNode_boolean_true");
-        JSOG instance = JSOG.createValueNode(true);
+        JSOG instance = new JSOG(true);
         assertEquals(om.getNodeFactory().booleanNode(true), instance.toJsonNode());
     }
 
@@ -2451,7 +2411,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_boolean_false() {
         System.out.println("testToJsonNode_boolean_false");
-        JSOG instance = JSOG.createValueNode(false);
+        JSOG instance = new JSOG(false);
         assertEquals(om.getNodeFactory().booleanNode(false), instance.toJsonNode());
     }
 
@@ -2461,7 +2421,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_bigDecimal() {
         System.out.println("testToJsonNode_bigDecimal");
-        JSOG instance = JSOG.createValueNode(BigDecimal.ZERO);
+        JSOG instance = new JSOG(BigDecimal.ZERO);
         assertEquals(om.getNodeFactory().numberNode(BigDecimal.ZERO), instance.toJsonNode());
     }
 
@@ -2471,7 +2431,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_bigInteger() {
         System.out.println("testToJsonNode_bigInteger");
-        JSOG instance = JSOG.createValueNode(BigInteger.ZERO);
+        JSOG instance = new JSOG(BigInteger.ZERO);
         assertEquals(om.getNodeFactory().numberNode(BigInteger.ZERO), instance.toJsonNode());
     }
 
@@ -2481,7 +2441,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_byte() {
         System.out.println("testToJsonNode_byte");
-        JSOG instance = JSOG.createValueNode(Byte.MAX_VALUE);
+        JSOG instance = new JSOG(Byte.MAX_VALUE);
         assertEquals(om.getNodeFactory().numberNode(Byte.MAX_VALUE), instance.toJsonNode());
     }
 
@@ -2491,7 +2451,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_char() {
         System.out.println("testToJsonNode_char");
-        JSOG instance = JSOG.createValueNode(Character.MAX_VALUE);
+        JSOG instance = new JSOG(Character.MAX_VALUE);
         assertEquals(om.getNodeFactory().numberNode(Character.MAX_VALUE), instance.toJsonNode());
     }
 
@@ -2501,7 +2461,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_short() {
         System.out.println("testToJsonNode_short");
-        JSOG instance = JSOG.createValueNode(Short.MAX_VALUE);
+        JSOG instance = new JSOG(Short.MAX_VALUE);
         assertEquals(om.getNodeFactory().numberNode(Short.MAX_VALUE), instance.toJsonNode());
     }
 
@@ -2511,7 +2471,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_int() {
         System.out.println("testToJsonNode_int");
-        JSOG instance = JSOG.createValueNode(Integer.MAX_VALUE);
+        JSOG instance = new JSOG(Integer.MAX_VALUE);
         assertEquals(om.getNodeFactory().numberNode(Integer.MAX_VALUE), instance.toJsonNode());
     }
 
@@ -2521,7 +2481,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_long() {
         System.out.println("testToJsonNode_long");
-        JSOG instance = JSOG.createValueNode(Long.MAX_VALUE);
+        JSOG instance = new JSOG(Long.MAX_VALUE);
         assertEquals(om.getNodeFactory().numberNode(Long.MAX_VALUE), instance.toJsonNode());
     }
 
@@ -2531,7 +2491,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_Double() {
         System.out.println("testToJsonNode_Double");
-        JSOG instance = JSOG.createValueNode(Double.MAX_VALUE);
+        JSOG instance = new JSOG(Double.MAX_VALUE);
         assertEquals(om.getNodeFactory().numberNode(Double.MAX_VALUE), instance.toJsonNode());
     }
 
@@ -2541,7 +2501,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_double() {
         System.out.println("testToJsonNode_double");
-        JSOG instance = JSOG.createValueNode(Double.MAX_VALUE);
+        JSOG instance = new JSOG(Double.MAX_VALUE);
         assertEquals(om.getNodeFactory().numberNode(Double.MAX_VALUE), instance.toJsonNode());
     }
 
@@ -2551,7 +2511,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_string() {
         System.out.println("testToJsonNode_string");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         assertEquals(om.getNodeFactory().textNode("test"), instance.toJsonNode());
     }
 
@@ -2561,7 +2521,7 @@ public class JSOGTest {
     @Test
     public void testToJsonNode_string_empty() {
         System.out.println("testToJsonNode_string_empty");
-        JSOG instance = JSOG.createValueNode("");
+        JSOG instance = new JSOG("");
         assertEquals(om.getNodeFactory().textNode(""), instance.toJsonNode());
     }
 
@@ -2571,7 +2531,7 @@ public class JSOGTest {
     @Test
     public void testToString() {
         System.out.println("testToString");
-        JSOG instance = JSOG.createValueNode("test");
+        JSOG instance = new JSOG("test");
         assertEquals("\"test\"", instance.toString());
     }
 
@@ -2581,11 +2541,11 @@ public class JSOGTest {
     @Test
     public void testToString_complex() {
         System.out.println("testToString_complex");
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance
             .get("foo")
-                .add(JSOG.createObjectNode().put("bar", "baz"))     // An object
-                .add(JSOG.createArrayNode().add("qux").add("quux")) // An array
+                .add(JSOG.object().put("bar", "baz"))     // An object
+                .add(JSOG.array().add("qux").add("quux")) // An array
                 .add("val");
 
 
@@ -2599,7 +2559,7 @@ public class JSOGTest {
     public void testKeySet() {
         System.out.println("testKeySet");
 
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put("foo", "bar");
 
         Set<String> expected = new HashSet();
@@ -2615,7 +2575,7 @@ public class JSOGTest {
     public void testKeySetOrdered() {
         System.out.println("testKeySetOrdered");
 
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         instance.put("foo", null);
         instance.put("bar", null);
         instance.put("baz", null);
@@ -2636,7 +2596,7 @@ public class JSOGTest {
     public void testKeySet_empty() {
         System.out.println("testKeySet_empty");
 
-        JSOG instance = JSOG.createObjectNode();
+        JSOG instance = JSOG.object();
         assertEquals(Collections.emptySet(), instance.keySet());
     }
 
@@ -2647,7 +2607,7 @@ public class JSOGTest {
     public void testKeySet_null() {
         System.out.println("testKeySet_null");
 
-        JSOG instance = JSOG.createValueNode();
+        JSOG instance = new JSOG();
         assertEquals(Collections.emptySet(), instance.keySet());
     }
 
@@ -2658,7 +2618,7 @@ public class JSOGTest {
     public void testKeySet_array() {
         System.out.println("testKeySet_array");
 
-        JSOG instance = JSOG.createArrayNode();
+        JSOG instance = JSOG.array();
         try {
             instance.keySet();
             fail("Expected an exception.");

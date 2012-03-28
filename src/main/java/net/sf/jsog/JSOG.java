@@ -420,49 +420,11 @@ public class JSOG implements Cloneable, Serializable {
 
         // If there's nothing to parse, create an empty JSON object.
         if (jsonString == null || jsonString.length() == 0) {
-            return createValueNode();
+            return new JSOG();
         }
 
         // Otherwise, try and parse it.
         return new JSOG(JACKSON_OBJECT_MAPPER.readTree(jsonString));
-    }
-
-    /**
-     * Creates a new value JSOG.
-     * @return A new JSOG with the value null.
-     * @deprecated use the {@link JSOG#JSOG()} constructor instead.
-     */
-    public static JSOG createValueNode() {
-        return new JSOG();
-    }
-
-    /**
-     * Creates a new value JSOG.
-     * @param value the primitive value to set for the JSOG.
-     * @return A new JSOG with the specified value.
-     * @throws IllegalArgumentException if the value is not a primitive.
-     * @deprecated use the {@link JSOG#JSOG(Object)} constructor instead.
-     */
-    public static JSOG createValueNode(final Object value) {
-        return new JSOG().set(value);
-    }
-
-    /**
-     * Creates a new object JSOG.
-     * @return a new empty JSOG object.
-     * @deprecated use {@link #object()} instead.
-     */
-    public static JSOG createObjectNode() {
-        return object();
-    }
-
-    /**
-     * Creates a new array JSOG.
-     * @return a new empty JSOG array.
-     * @deprecated use {@link #array()} instead.
-     */
-    public static JSOG createArrayNode() {
-        return array();
     }
 
     /**
