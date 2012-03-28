@@ -332,13 +332,10 @@ public class JSOGTest {
     /**
      * Test of object(Enum,Object) method, of class JSOG.
      */
-    @Test
+    @Test(expected=NullPointerException.class)
     public void testObject_Enum_Object_null() {
         System.out.println("testObject_Enum_Object_null");
         JSOG result = JSOG.object((TestEnum) null, "bar");
-        assertTrue(result.isObject());
-        assertEquals(1, result.size());
-        assertEquals("bar", result.get((TestEnum) null).getStringValue());
     }
 
     /**
@@ -985,8 +982,7 @@ public class JSOGTest {
     public void testHasKey_Enum_null() {
         System.out.println("testHasKey_Enum_null");
         JSOG instance = JSOG.object();
-        instance.put((TestEnum) null, null);
-        assertTrue(instance.hasKey((TestEnum) null));
+        assertFalse(instance.hasKey((TestEnum) null));
     }
 
     /**
@@ -1069,9 +1065,8 @@ public class JSOGTest {
     public void testRemove_Enum_null() {
         System.out.println("testRemove_Enum_null");
         JSOG instance = JSOG.object();
-        instance.put((TestEnum) null, "bar");
         Object result = instance.remove((TestEnum) null);
-        assertEquals("bar", result);
+        assertNull(result);
     }
 
     /**
@@ -1219,12 +1214,11 @@ public class JSOGTest {
     /**
      * Test of put method, of class JSOG.
      */
-    @Test
+    @Test(expected=NullPointerException.class)
     public void testPut_Enum_null() {
         System.out.println("testPut_Enum_null");
         JSOG instance = JSOG.object();
         instance.put((TestEnum) null, "bar");
-        assertEquals("bar", instance.get((TestEnum) null).getValue());
     }
 
     /**
@@ -1465,12 +1459,11 @@ public class JSOGTest {
     /**
      * Test of get method, of class JSOG.
      */
-    @Test
+    @Test(expected=NullPointerException.class)
     public void testGet_Enum_null() {
         System.out.println("testGet_Enum_null");
         JSOG instance = JSOG.object();
-        instance.get((TestEnum) null).set("bar");
-        assertEquals("bar", instance.get((TestEnum) null).getValue());
+        instance.get((TestEnum) null);
     }
 
     /**
