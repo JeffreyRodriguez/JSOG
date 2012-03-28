@@ -548,7 +548,7 @@ public class JSOG implements Cloneable, Serializable {
      */
     public static void merge(final JSOG src, final JSOG dst) {
         if (src.isObject()) {
-            for (String key : src.getKeySet()) {
+            for (String key : src.keySet()) {
 
                 // If the source value is a primitive, just set it
                 JSOG srcKey = src.get(key);
@@ -1201,10 +1201,9 @@ public class JSOG implements Cloneable, Serializable {
      * If the JSOG is null, an empty set is returned.
      * @return the set of keys contained in this JSOG object.
      * @throws IllegalStateException if the value of the JSOG is not an object.
-     * @deprecated use {@link #keySet()} instead.
      */
     @SuppressWarnings("unchecked")
-    public final Set<String> getKeySet() {
+    public final Set<String> keySet() {
         if (isObject()) {
             return Collections.unmodifiableSet(
                     ((Map<String, Object>) value).keySet());
@@ -1215,20 +1214,6 @@ public class JSOG implements Cloneable, Serializable {
         // Not an object...
         throw new IllegalStateException(
                 "The value of this JSOG is not an object.");
-    }
-
-    /**
-     * Gets a set of keys contained by this JSOG object.
-     *
-     * The set has insertion-order based iteration.
-     *
-     * If the JSOG is null, an empty set is returned.
-     * @return the set of keys contained in this JSOG object.
-     * @throws IllegalStateException if the value of the JSOG is not an object.
-     */
-    @SuppressWarnings("unchecked")
-    public final Set<String> keySet() {
-        return getKeySet();
     }
 
     /**
@@ -1767,7 +1752,7 @@ public class JSOG implements Cloneable, Serializable {
                 }
 
                 // Check each value
-                for (String key : this.getKeySet()) {
+                for (String key : this.keySet()) {
                     JSOG thisValue = this.get(key);
                     JSOG thatValue = that.get(key);
 

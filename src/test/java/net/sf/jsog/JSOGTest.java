@@ -780,7 +780,7 @@ public class JSOGTest {
     public void testAddWithIndexOutOfRange() {
         System.out.println("testAddWithIndexOutOfRange");
         JSOG instance = JSOG.createArrayNode();
-        
+
         instance.add(1, null);
         fail("Expected an exception.");
     }
@@ -2593,81 +2593,6 @@ public class JSOGTest {
     }
 
     /**
-     * Test of the getKeySet method, of class JSOG.
-     */
-    @Test
-    public void testGetKeySet() {
-        System.out.println("testGetKeySet");
-
-        JSOG instance = JSOG.createObjectNode();
-        instance.put("foo", "bar");
-
-        Set<String> expected = new HashSet();
-        expected.add("foo");
-
-        assertEquals(expected, instance.getKeySet());
-    }
-
-    /**
-     * Test of the getKeySet method, of class JSOG.
-     */
-    @Test
-    public void testGetKeySetOrdered() {
-        System.out.println("testGetKeySetOrdered");
-
-        JSOG instance = JSOG.createObjectNode();
-        instance.put("foo", null);
-        instance.put("bar", null);
-        instance.put("baz", null);
-        instance.put("qux", null);
-        
-        Iterator<String> keys = instance.getKeySet().iterator();
-
-        assertEquals("foo", keys.next());
-        assertEquals("bar", keys.next());
-        assertEquals("baz", keys.next());
-        assertEquals("qux", keys.next());
-    }
-
-    /**
-     * Test of the getKeySet method, of class JSOG.
-     */
-    @Test
-    public void testGetKeySet_empty() {
-        System.out.println("testGetKeySet_empty");
-
-        JSOG instance = JSOG.createObjectNode();
-        assertEquals(Collections.emptySet(), instance.getKeySet());
-    }
-
-    /**
-     * Test of the getKeySet method, of class JSOG.
-     */
-    @Test
-    public void testGetKeySet_null() {
-        System.out.println("testGetKeySet_null");
-
-        JSOG instance = JSOG.createValueNode();
-        assertEquals(Collections.emptySet(), instance.getKeySet());
-    }
-
-    /**
-     * Test of the getKeySet method, of class JSOG.
-     */
-    @Test
-    public void testGetKeySet_array() {
-        System.out.println("testGetKeySet_array");
-
-        JSOG instance = JSOG.createArrayNode();
-        try {
-            instance.getKeySet();
-            fail("Expected an exception.");
-        } catch (IllegalStateException e) {
-            assertTrue(e.getMessage().contains("not an object"));
-        }
-    }
-
-    /**
      * Test of the keySet method, of class JSOG.
      */
     @Test
@@ -3709,7 +3634,7 @@ public class JSOGTest {
         byte value = new JSOG(null).getValueAs(byte.class);
         fail("Expected an exception");
     }
-    
+
     /**
      * Test of the getValueAs method, of class JSOG.
      */
@@ -3870,5 +3795,5 @@ public class JSOGTest {
         JSOG result = JSOG.object("foo", "bar").path(JsogPath.compile("$"));
         assertEquals(JSOG.object("foo", "bar"), result);
     }
-    
+
 }
