@@ -51,6 +51,8 @@ import org.codehaus.jackson.node.ObjectNode;
 /**
  * JavaScript Object Graph.
  *
+ *
+ * <p>JSOG instances are not thread-safe.</p>
  * @author <a href="mailto:jeff@jeffrodriguez.com">Jeff Rodriguez</a>
  */
 public class JSOG implements Cloneable, Serializable {
@@ -180,13 +182,9 @@ public class JSOG implements Cloneable, Serializable {
 
         /**
          * Passthrough to the backing iterator.
-         *
-         * Synchronizes on the JSOG.
          */
         public void remove() {
-            synchronized (JSOG.this) {
-                it.remove();
-            }
+            it.remove();
         }
 
     }
@@ -237,13 +235,9 @@ public class JSOG implements Cloneable, Serializable {
 
         /**
          * Passthrough to the backing iterator.
-         *
-         * Synchronizes on the JSOG..
          */
         public void remove() {
-            synchronized (JSOG.this) {
-                it.remove();
-            }
+            it.remove();
         }
 
     }
@@ -690,7 +684,7 @@ public class JSOG implements Cloneable, Serializable {
      * @param type the type to check.
      * @return true if the value is null or is assignable from the type.
      */
-    private synchronized boolean isValueType(final Class<?> type) {
+    private boolean isValueType(final Class<?> type) {
 
         // Don't do any more work than necessary
         if (value == null) {
@@ -709,7 +703,7 @@ public class JSOG implements Cloneable, Serializable {
      * Tests if the value of this object is null.
      * @return true if the object is null.
      */
-    public final synchronized boolean isNull() {
+    public final boolean isNull() {
         return value == null;
     }
 
@@ -733,7 +727,7 @@ public class JSOG implements Cloneable, Serializable {
      * </ul>
      * @return true if the object is a primitive.
      */
-    public final synchronized boolean isPrimitive() {
+    public final boolean isPrimitive() {
         return isPrimitive(value);
     }
 
@@ -741,7 +735,7 @@ public class JSOG implements Cloneable, Serializable {
      * Tests if the value of this JSOG is an array.
      * @return true if the value is an array.
      */
-    public final synchronized boolean isArray() {
+    public final boolean isArray() {
         return isArray(value);
     }
 
@@ -749,7 +743,7 @@ public class JSOG implements Cloneable, Serializable {
      * Tests if the value of this JSOG is an object.
      * @return true if the value is an object.
      */
-    public final synchronized boolean isObject() {
+    public final boolean isObject() {
         return isObject(value);
     }
 
@@ -761,7 +755,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return the current JSOG object.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized JSOG add(final Object newValue) {
+    public final JSOG add(final Object newValue) {
 
         // Make sure it's a primitive
         if (isPrimitive(newValue) || newValue instanceof JSOG) {
@@ -802,7 +796,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return the current JSOG object.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized JSOG addAll(final Collection<Object> values) {
+    public final JSOG addAll(final Collection<Object> values) {
         for (Object newValue : values) {
             add(newValue);
         }
@@ -822,7 +816,7 @@ public class JSOG implements Cloneable, Serializable {
      *                                   (index < 0 || index > size())
      */
     @SuppressWarnings("unchecked")
-    public final synchronized JSOG add(final int index, final Object newValue) {
+    public final JSOG add(final int index, final Object newValue) {
 
         // Make sure it's a primitive
         if (isPrimitive(newValue) || newValue instanceof JSOG) {
@@ -863,9 +857,9 @@ public class JSOG implements Cloneable, Serializable {
      * @throws NullPointerException if key is null.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized JSOG put(final String key,
+    public final JSOG put(final String key,
                                        final Object newValue) {
-        
+
         if (key == null) {
             throw new NullPointerException("key is null");
         }
@@ -908,7 +902,7 @@ public class JSOG implements Cloneable, Serializable {
      * @throws IllegalArgumentException if value is not a primitive or JSOG.
      * @throws NullPointerException if key is null.
      */
-    public final synchronized JSOG put(final Enum<?> key,
+    public final JSOG put(final Enum<?> key,
                                        final Object newValue) {
         return put(key == null ? null : key.toString(), newValue);
     }
@@ -925,7 +919,7 @@ public class JSOG implements Cloneable, Serializable {
      * @throws IllegalArgumentException if a value is not a primitive or JSOG.
      * @throws NullPointerException if key is null.
      */
-    public final synchronized JSOG putAll(final Map<String, Object> values) {
+    public final JSOG putAll(final Map<String, Object> values) {
         for (Entry<String, Object> entry : values.entrySet()) {
             put(entry.getKey(), entry.getValue());
         }
@@ -939,7 +933,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return this JSOG object.
      * @throws IllegalArgumentException if the value is not a primitive.
      */
-    public final synchronized JSOG set(final Object newValue) {
+    public final JSOG set(final Object newValue) {
         if (isPrimitive(newValue) || newValue instanceof JSOG) {
             this.value = newValue;
             return this;
@@ -959,7 +953,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return the JSOG object identified by the key.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized JSOG get(final String key) {
+    public final JSOG get(final String key) {
 
         /* There's a lot of magic in this method, so I've documented the tar
          * out of it. I've also made it as simple to read as possible.
@@ -1011,7 +1005,7 @@ public class JSOG implements Cloneable, Serializable {
      * @param key the object key.
      * @return the JSOG object identified by the key.
      */
-    public final synchronized JSOG get(final Enum<?> key) {
+    public final JSOG get(final Enum<?> key) {
         return get(key == null ? null : key.toString());
     }
 
@@ -1023,7 +1017,7 @@ public class JSOG implements Cloneable, Serializable {
      * the size of the array.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized JSOG get(final int index) {
+    public final JSOG get(final int index) {
         List<Object> list;
         try {
             list = (List<Object>) value;
@@ -1046,7 +1040,7 @@ public class JSOG implements Cloneable, Serializable {
      * @throws IllegalStateException if the JSOG is not an array.
      * @see List#indexOf(Object)
      */
-    public final synchronized int indexOf(final Object value) {
+    public final int indexOf(final Object value) {
         List<Object> list;
         try {
             list = (List<Object>) this.value;
@@ -1067,7 +1061,7 @@ public class JSOG implements Cloneable, Serializable {
      * @throws IllegalStateException if the JSOG is not an array.
      * @see List#contains(Object)
      */
-    public final synchronized boolean contains(final Object value) {
+    public final boolean contains(final Object value) {
         List<Object> list;
         try {
             list = (List<Object>) this.value;
@@ -1088,7 +1082,7 @@ public class JSOG implements Cloneable, Serializable {
      * @throws IllegalStateException if the JSOG is not an object.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized boolean hasKey(final String key) {
+    public final boolean hasKey(final String key) {
         if (isNull()) {
             return false;
         }
@@ -1109,7 +1103,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return true if the key exists, false otherwise.
      * @throws IllegalStateException if the JSOG is not an object.
      */
-    public final synchronized boolean hasKey(final Enum<?> key) {
+    public final boolean hasKey(final Enum<?> key) {
         return hasKey(key == null ? null : key.toString());
     }
 
@@ -1120,7 +1114,7 @@ public class JSOG implements Cloneable, Serializable {
      * @throws IllegalStateException if the JSOG is not an object.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized Object remove(final String key) {
+    public final Object remove(final String key) {
         Map<String, Object> map;
         try {
             map = (Map<String, Object>) value;
@@ -1137,7 +1131,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return the value that was removed, or null if the key does not exist.
      * @throws IllegalStateException if the JSOG is not an object.
      */
-    public final synchronized Object remove(final Enum<?> key) {
+    public final Object remove(final Enum<?> key) {
         return remove(key == null ? null : key.toString());
     }
 
@@ -1149,7 +1143,7 @@ public class JSOG implements Cloneable, Serializable {
      * the size of the array.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized Object remove(final int index) {
+    public final Object remove(final int index) {
         List<Object> list;
         try {
             list = (List<Object>) value;
@@ -1159,7 +1153,7 @@ public class JSOG implements Cloneable, Serializable {
 
         return list.remove(index);
     }
-    
+
     /**
      * Clears the value of the JSOG.
      *
@@ -1168,7 +1162,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return this JSOG.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized JSOG clear() {
+    public final JSOG clear() {
         if (isObject()) {
             ((Map<String, Object>) value).clear();
         } else if (isArray()) {
@@ -1187,7 +1181,7 @@ public class JSOG implements Cloneable, Serializable {
      * object.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized int size() {
+    public final int size() {
         if (isArray()) {
             return ((List<Object>) value).size();
         } else if (isObject()) {
@@ -1210,7 +1204,7 @@ public class JSOG implements Cloneable, Serializable {
      * @deprecated use {@link #keySet()} instead.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized Set<String> getKeySet() {
+    public final Set<String> getKeySet() {
         if (isObject()) {
             return Collections.unmodifiableSet(
                     ((Map<String, Object>) value).keySet());
@@ -1233,7 +1227,7 @@ public class JSOG implements Cloneable, Serializable {
      * @throws IllegalStateException if the value of the JSOG is not an object.
      */
     @SuppressWarnings("unchecked")
-    public final synchronized Set<String> keySet() {
+    public final Set<String> keySet() {
         return getKeySet();
     }
 
@@ -1241,7 +1235,7 @@ public class JSOG implements Cloneable, Serializable {
      * Gets an iterator for the entries in an object JSOG.
      * @return an entry iterator.
      */
-    public final synchronized Iterator<Entry<String, JSOG>> objectIterator() {
+    public final Iterator<Entry<String, JSOG>> objectIterator() {
         if (isNull()) {
             return new EmptyIterator<Entry<String, JSOG>>();
         }
@@ -1259,7 +1253,7 @@ public class JSOG implements Cloneable, Serializable {
      * Gets an iterator for the values in an array JSOG.
      * @return a value iterator.
      */
-    public final synchronized Iterator<JSOG> arrayIterator() {
+    public final Iterator<JSOG> arrayIterator() {
         if (isNull()) {
             return new EmptyIterator<JSOG>();
         }
@@ -1279,7 +1273,7 @@ public class JSOG implements Cloneable, Serializable {
      * For use in for-each loops.
      * @return an entry iterable.
      */
-    public final synchronized Iterable<Entry<String, JSOG>> objectIterable() {
+    public final Iterable<Entry<String, JSOG>> objectIterable() {
         return new Iterable<Entry<String, JSOG>>() {
             public Iterator<Entry<String, JSOG>> iterator() {
                 return objectIterator();
@@ -1293,7 +1287,7 @@ public class JSOG implements Cloneable, Serializable {
      * For use in for-each loops.
      * @return a value iterable.
      */
-    public final synchronized Iterable<JSOG> arrayIterable() {
+    public final Iterable<JSOG> arrayIterable() {
         return new Iterable<JSOG>() {
             public Iterator<JSOG> iterator() {
                 return arrayIterator();
@@ -1305,7 +1299,7 @@ public class JSOG implements Cloneable, Serializable {
      * Gets the value of this JSOG.
      * @return the value of this JSOG.
      */
-    public final synchronized Object getValue() {
+    public final Object getValue() {
 
         // We can only get the values of primitives and other JSOG values
         if (!isPrimitive() && !(value instanceof JSOG)) {
@@ -1320,7 +1314,7 @@ public class JSOG implements Cloneable, Serializable {
      *
      * This method invokes the corresponding get*Value method on the JSOG. Only
      * types with a corresponding get*Value method are supported.
-     * 
+     *
      * @param <T> the type of the value.
      * @param type the type of the value.
      * @return the value, as the specified type.
@@ -1349,7 +1343,7 @@ public class JSOG implements Cloneable, Serializable {
                 || type.isAssignableFrom(byte.class)) {
             return (T) this.getByteValue();
         }
-        
+
         if (type.isAssignableFrom(Short.class)
                 || type.isAssignableFrom(short.class)) {
             return (T) this.getShortValue();
@@ -1395,7 +1389,7 @@ public class JSOG implements Cloneable, Serializable {
      * it's toString() method fails.
      * @see Character#digit(char, int)
      */
-    public final synchronized BigDecimal getBigDecimalValue() {
+    public final BigDecimal getBigDecimalValue() {
 
         // The easy way
         if (isValueType(BigDecimal.class)) {
@@ -1432,7 +1426,7 @@ public class JSOG implements Cloneable, Serializable {
      * it's toString() method fails.
      * @see Character#digit(char, int)
      */
-    public final synchronized BigInteger getBigIntegerValue() {
+    public final BigInteger getBigIntegerValue() {
 
         // The easy way
         if (isValueType(BigInteger.class)) {
@@ -1459,7 +1453,7 @@ public class JSOG implements Cloneable, Serializable {
      * it's toString() method fails.
      * @see Character#digit(char, int)
      */
-    public final synchronized Byte getByteValue() {
+    public final Byte getByteValue() {
 
         // The easy way
         if (isValueType(Byte.class)) {
@@ -1486,7 +1480,7 @@ public class JSOG implements Cloneable, Serializable {
      * it's toString() method fails.
      * @see Character#digit(char, int)
      */
-    public final synchronized Short getShortValue() {
+    public final Short getShortValue() {
 
         // The easy way
         if (isValueType(Short.class)) {
@@ -1513,7 +1507,7 @@ public class JSOG implements Cloneable, Serializable {
      * it's toString() method fails.
      * @see Character#digit(char, int)
      */
-    public final synchronized Integer getIntegerValue() {
+    public final Integer getIntegerValue() {
 
         // The easy way
         if (isValueType(Integer.class)) {
@@ -1540,7 +1534,7 @@ public class JSOG implements Cloneable, Serializable {
      * it's toString() method fails.
      * @see Character#digit(char, int)
      */
-    public final synchronized Long getLongValue() {
+    public final Long getLongValue() {
 
         // The easy way
         if (isValueType(Long.class)) {
@@ -1567,7 +1561,7 @@ public class JSOG implements Cloneable, Serializable {
      * it's toString() method fails.
      * @see Character#digit(char, int)
      */
-    public final synchronized Float getFloatValue() {
+    public final Float getFloatValue() {
 
         // The easy way
         if (isValueType(Float.class)) {
@@ -1594,7 +1588,7 @@ public class JSOG implements Cloneable, Serializable {
      * it's toString() method fails.
      * @see Character#digit(char, int)
      */
-    public final synchronized Double getDoubleValue() {
+    public final Double getDoubleValue() {
 
         // The easy way
         if (isValueType(Double.class)) {
@@ -1618,7 +1612,7 @@ public class JSOG implements Cloneable, Serializable {
      *
      * @return the String value of this JSOG, or null if the value is null.
      */
-    public final synchronized String getStringValue() {
+    public final String getStringValue() {
 
         // The easy way
         if (isValueType(String.class)) {
@@ -1635,7 +1629,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return the Boolean value of this JSOG, or null if the value is null.
      * @see Boolean#parseBoolean(String)
      */
-    public final synchronized Boolean getBooleanValue() {
+    public final Boolean getBooleanValue() {
 
         // The easy way
         if (isValueType(Boolean.class)) {
@@ -1682,7 +1676,7 @@ public class JSOG implements Cloneable, Serializable {
      * Converts this JSOG to a JsonNode.
      * @return a JsonNode representing this JSOG.
      */
-    public final synchronized JsonNode toJsonNode() {
+    public final JsonNode toJsonNode() {
         return toJsonNode(value);
     }
 
@@ -1692,19 +1686,19 @@ public class JSOG implements Cloneable, Serializable {
      * @return this JSOG.
      * @see #merge(JSOG, JSOG)
      */
-    public final synchronized JSOG merge(final JSOG source) {
+    public final JSOG merge(final JSOG source) {
         merge(source, this);
 
         return this;
     }
 
     @Override
-    public final synchronized String toString() {
+    public final String toString() {
         return toJsonNode().toString();
     }
 
     @Override
-    public final synchronized int hashCode() {
+    public final int hashCode() {
         int hash = 7;
         hash = 53 * hash + (this.value != null ? this.value.hashCode() : 0);
         return hash;
@@ -1720,7 +1714,7 @@ public class JSOG implements Cloneable, Serializable {
      * @return true if the object is equal to this JSOG.
      */
     @Override
-    public final synchronized boolean equals(final Object obj) {
+    public final boolean equals(final Object obj) {
         if (obj == null) {
             return false;
         }
@@ -1788,7 +1782,7 @@ public class JSOG implements Cloneable, Serializable {
     }
 
     @Override
-    public final synchronized JSOG clone() {
+    public final JSOG clone() {
         return new JSOG().merge(this);
     }
 
