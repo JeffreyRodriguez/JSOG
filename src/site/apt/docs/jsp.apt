@@ -1,0 +1,19 @@
+            ------
+            User Guide : JSP EL Functions
+            ------
+            Jeff Rodriguez
+            ------
+            ------
+
+User Guide : JSP EL Functions
+
+  The JSP EL Functions allow you to use JSOG in JSP.
+
+* Usage Example
+
++-------------------------------------------------------------------------------
+<%@taglib prefix="jsog" uri="http://jsog.sourceforge.net/"%>
+
+
+TODO
++-------------------------------------------------------------------------------

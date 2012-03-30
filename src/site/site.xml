@@ -20,6 +20,7 @@
           <item name="Dynamic Methods" href="docs/dynamic.html"/>
           <item name="XML Factory" href="docs/xml.html"/>
           <item name="Bean Factory" href="docs/bean.html"/>
+          <item name="JSP EL Functions" href="docs/jsp.html"/>
       </item>
     </menu>
 

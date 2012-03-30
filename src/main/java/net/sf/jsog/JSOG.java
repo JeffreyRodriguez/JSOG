@@ -550,6 +550,90 @@ public class JSOG implements Cloneable, Serializable {
     }
 
     /**
+     * Gets the value of a JSOG.
+     * @return the value of the JSOG.
+     */
+    public static Object value(final JSOG jsog) {
+        return jsog.getValue();
+    }
+
+    /**
+     * Evaluates a JSOG Path expression and returns it's value.
+     * @return the value of the JSOG specified by the path expression.
+     * @see JSOG#path(java.lang.String)
+     */
+    public static Object value(final String path, final JSOG jsog) {
+        return jsog.path(path).getValue();
+    }
+
+    /**
+     * Gets the value of a JSOG.
+     * @return the JSOG as a string.
+     */
+    public static String string(final JSOG jsog) {
+        return jsog.toString();
+    }
+
+    /**
+     * Tests if the value of a JSOG is null.
+     * @return true if the object is null.
+     */
+    public static boolean isNull(JSOG jsog) {
+        return jsog.isNull();
+    }
+
+    /**
+     * Tests if the value of a JSOG is a primitive.
+     *
+     * The following types are considered primitives:
+     * <ul>
+     *   <li>null</li>
+     *   <li>Boolean</li>
+     *   <li>BigDecimal</li>
+     *   <li>BigInteger</li>
+     *   <li>Byte</li>
+     *   <li>Character</li>
+     *   <li>Short</li>
+     *   <li>Integer</li>
+     *   <li>Long</li>
+     *   <li>Float</li>
+     *   <li>Double</li>
+     *   <li>String</li>
+     * </ul>
+     * @return true if the value of the JSOG is a primitive.
+     */
+    public static boolean isPrimitive(JSOG jsog) {
+        return jsog.isPrimitive();
+    }
+
+    /**
+     * Tests if the value of a JSOG is an array.
+     * @return true if the value of the JSOG is an array.
+     */
+    public static boolean isArray(JSOG jsog) {
+        return jsog.isArray();
+    }
+
+    /**
+     * Tests if the value of a JSOG is an object.
+     * @return true if the value of the JSOG is an object.
+     */
+    public static boolean isObject(JSOG jsog) {
+        return jsog.isObject();
+    }
+
+    /**
+     * Gets the value of a JSOG as a Boolean, if possible.
+     *
+     * If the value not a boolean, it's toString() method will be used.
+     * @return the Boolean value of the JSOG, or null if the value is null.
+     * @see JSOG#getBooleanValue()
+     */
+    public static Boolean booleanValue(JSOG jsog) {
+        return jsog.getBooleanValue();
+    }
+
+    /**
      * Wraps a value in a JSOG, if it is not already wrapped.
      * @param value the value to wrap
      * @return the wrapped value.

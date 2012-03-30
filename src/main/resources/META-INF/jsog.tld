@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+  <short-name>jsog</short-name>
+  <uri>http://jsog.sourceforge.net/</uri>
+  <display-name>JSOG</display-name>
+  <description>JavaScript Object Graph</description>
+  <tlib-version>1.0</tlib-version>
+
+  <function>
+      <name>isNull</name>
+      <description>Tests if the value of a JSOG is null.</description>
+      <function-class>net.sf.jsog.JSOG</function-class>
+      <function-signature>boolean isNull(net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <function>
+      <name>isPrimitive</name>
+      <description>Tests if the value of a JSOG is a primitive.</description>
+      <function-class>net.sf.jsog.JSOG</function-class>
+      <function-signature>boolean isPrimitive(net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <function>
+      <name>isArray</name>
+      <description>Tests if the value of a JSOG is an array.</description>
+      <function-class>net.sf.jsog.JSOG</function-class>
+      <function-signature>boolean isArray(net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <function>
+      <name>isObject</name>
+      <description>Tests if the value of a JSOG is an object.</description>
+      <function-class>net.sf.jsog.JSOG</function-class>
+      <function-signature>boolean isObject(net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <function>
+      <name>path</name>
+      <description>Evaluates a JSOG path expression on a JSOG object.</description>
+      <function-class>net.sf.jsog.JsogPath</function-class>
+      <function-signature>net.sf.jsog.JSOG value(java.lang.String, net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <function>
+      <name>value</name>
+      <description>Gets the value of a JSOG object.</description>
+      <function-class>net.sf.jsog.JSOG</function-class>
+      <function-signature>java.lang.Object value(net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <function>
+      <name>boolean</name>
+      <description>Gets the value of a JSOG object.</description>
+      <function-class>net.sf.jsog.JSOG</function-class>
+      <function-signature>boolean booleanValue(net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <function>
+      <name>eval</name>
+      <description>Evaluates a JSOG Path expression and returns it's value.</description>
+      <function-class>net.sf.jsog.JSOG</function-class>
+      <function-signature>java.lang.Object value(java.lang.String, net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <function>
+      <name>string</name>
+      <description>Gets the value of a JSOG object.</description>
+      <function-class>net.sf.jsog.JSOG</function-class>
+      <function-signature>java.lang.Object string(net.sf.jsog.JSOG)</function-signature>
+  </function>
+
+  <tag>
+    <name>forEach</name>
+    <description>Iterates over the values of a JSOG array or object.</description>
+    <tag-class>net.sf.jsog.jsp.ForEachTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+        <name>items</name>
+        <description>The JSOG array or object to iterate over.</description>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+        <type>net.sf.jsog.JSOG</type>
+    </attribute>
+    <attribute>
+        <name>var</name>
+        <description>Name of the exported scoped variable for the current item of the iteration. This scoped variable has nested visibility. Its type depends on the object of the underlying collection..</description>
+        <required>true</required>
+        <type>java.lang.String</type>
+    </attribute>
+  </tag>
+
+</taglib>

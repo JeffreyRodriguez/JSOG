@@ -57,6 +57,269 @@ public class JSOGTest {
 
     private ObjectMapper om = new ObjectMapper();
 
+    //<editor-fold defaultstate="collapsed" desc="Static Methods">
+
+    //<editor-fold defaultstate="collapsed" desc="isNull">
+    /**
+     * Test of isNull method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsNull() {
+        System.out.println("testStaticIsNull");
+        JSOG instance = new JSOG(null);
+        boolean result = instance.isNull();
+        assertEquals(true, result);
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="isPrimitive">
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_null() {
+        System.out.println("testStaticIsPrimitive_null");
+        JSOG instance = new JSOG(null);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_boolean_true() {
+        System.out.println("testStaticIsPrimitive_boolean_true");
+        JSOG instance = new JSOG(true);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_boolean_false() {
+        System.out.println("testStaticIsPrimitive_boolean_false");
+        JSOG instance = new JSOG(false);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_bigDecimal() {
+        System.out.println("testStaticIsPrimitive_bigDecimal");
+        JSOG instance = new JSOG(BigDecimal.ZERO);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_bigInteger() {
+        System.out.println("testStaticIsPrimitive_bigInteger");
+        JSOG instance = new JSOG(BigInteger.ZERO);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_byte() {
+        System.out.println("testStaticIsPrimitive_byte");
+        JSOG instance = new JSOG(Byte.MAX_VALUE);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_char() {
+        System.out.println("testStaticIsPrimitive_char");
+        JSOG instance = new JSOG(Character.MAX_VALUE);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_short() {
+        System.out.println("testStaticIsPrimitive_short");
+        JSOG instance = new JSOG(Short.MAX_VALUE);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_int() {
+        System.out.println("testStaticIsPrimitive_int");
+        JSOG instance = new JSOG(Integer.MAX_VALUE);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_long() {
+        System.out.println("testStaticIsPrimitive_long");
+        JSOG instance = new JSOG(Long.MAX_VALUE);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_float() {
+        System.out.println("testStaticIsPrimitive_float");
+        JSOG instance = new JSOG(Float.MAX_VALUE);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_double() {
+        System.out.println("testStaticIsPrimitive_double");
+        JSOG instance = new JSOG(Double.MAX_VALUE);
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_string() {
+        System.out.println("testStaticIsPrimitive_string");
+        JSOG instance = new JSOG("test");
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_string_empty() {
+        System.out.println("testStaticIsPrimitive_string_empty");
+        JSOG instance = new JSOG("");
+        assertTrue(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_array() {
+        System.out.println("testStaticIsPrimitive_array");
+        JSOG instance = JSOG.array();
+        assertFalse(JSOG.isPrimitive(instance));
+    }
+
+    /**
+     * Test of isPrimitive method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsPrimitive_object() {
+        System.out.println("testStaticIsPrimitive_object");
+        JSOG instance = JSOG.object();
+        assertFalse(JSOG.isPrimitive(instance));
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="isArray">
+    /**
+     * Test of isArray method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsArray_true() {
+        System.out.println("testStaticIsArray_true");
+        JSOG instance = JSOG.array();
+        assertTrue(instance.isArray());
+    }
+
+    /**
+     * Test of isArray method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsArray_falseNull() {
+        System.out.println("testStaticIsArray_falseNull");
+        JSOG instance = new JSOG();
+        assertFalse(instance.isArray());
+    }
+
+    /**
+     * Test of isArray method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsArray_falseObject() {
+        System.out.println("testStaticIsArray_falseObject");
+        JSOG instance = JSOG.object();
+        assertFalse(instance.isArray());
+    }
+
+    /**
+     * Test of isObject method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsArray_falseString() {
+        System.out.println("testStaticIsArray_falseString");
+        JSOG instance = new JSOG("");
+        assertFalse(instance.isArray());
+    }
+    //</editor-fold>
+
+    //<editor-fold defaultstate="collapsed" desc="isObject">
+    /**
+     * Test of isObject method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsObject_true() {
+        System.out.println("testStaticIsObject_true");
+        JSOG instance = JSOG.object();
+        assertTrue(instance.isObject());
+    }
+
+    /**
+     * Test of isObject method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsObject_falseNull() {
+        System.out.println("testStaticIsObject_falseNull");
+        JSOG instance = new JSOG();
+        assertFalse(instance.isObject());
+    }
+
+    /**
+     * Test of isObject method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsObject_falseArray() {
+        System.out.println("testStaticIsArray_falseArray");
+        JSOG instance = JSOG.array();
+        assertFalse(instance.isObject());
+    }
+
+    /**
+     * Test of isObject method, of class JSOG.
+     */
+    @Test
+    public void testStaticIsObject_falseString() {
+        System.out.println("testStaticIsObject_falseString");
+        JSOG instance = new JSOG("");
+        assertFalse(instance.isObject());
+    }
+    //</editor-fold>
+
+    //</editor-fold>
+
     @Test
     public void testMergeChaining() {
         JSOG dst = new JSOG();
@@ -621,6 +884,36 @@ public class JSOGTest {
         System.out.println("testIsObject_falseString");
         JSOG instance = new JSOG("");
         assertFalse(instance.isObject());
+    }
+
+    /**
+     * Test of value method, of class JSOG.
+     */
+    @Test
+    public void testValueStringJsog() {
+        System.out.println("testValueStringJsog");
+        JSOG instance = JSOG.object("foo", "bar");
+        assertEquals("bar", JSOG.value("$.foo", instance));
+    }
+
+    /**
+     * Test of value method, of class JSOG.
+     */
+    @Test
+    public void testValue() {
+        System.out.println("testValue");
+        JSOG instance = new JSOG(null);
+        assertNull(JSOG.value(instance));
+    }
+
+    /**
+     * Test of value method, of class JSOG.
+     */
+    @Test
+    public void testValue_String() {
+        System.out.println("testValue_String");
+        JSOG instance = new JSOG("foo");
+        assertEquals("foo", JSOG.value(instance));
     }
 
     /**
@@ -2517,6 +2810,17 @@ public class JSOGTest {
         JSOG instance = new JSOG("");
         assertEquals(om.getNodeFactory().textNode(""), instance.toJsonNode());
     }
+
+    /**
+     * Test of string method, of class JSOG.
+     */
+    @Test
+    public void testString() {
+        System.out.println("testString");
+        JSOG instance = new JSOG("test");
+        assertEquals("\"test\"", JSOG.string(instance));
+    }
+
 
     /**
      * Test of toString method, of class JSOG.
