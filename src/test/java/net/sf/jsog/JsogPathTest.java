@@ -158,6 +158,13 @@ public class JsogPathTest {
     }
 
     @Test
+    public void testDotWithUnderscore() throws Exception {
+        System.out.println("testDotWithUnderscore");
+        JSOG result = JsogPath.evaluate("$.foo_1", JSOG.object("foo_1", "bar"));
+        assertEquals("bar", result.getStringValue());
+    }
+
+    @Test
     public void testDotWithNestedDots() throws Exception {
         System.out.println("testDotWithNestedDots");
 

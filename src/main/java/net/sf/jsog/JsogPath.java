@@ -92,7 +92,7 @@ public final class JsogPath implements Serializable {
 
         private final int characters;
         private final String escape;
-        
+
         private Escape(int characters, String escape) {
             this.characters = characters;
             this.escape = escape;
@@ -206,7 +206,7 @@ public final class JsogPath implements Serializable {
             char c = path.charAt(i);
 
             // It should be either a letter or digit
-            if (Character.isLetter(c) || Character.isDigit(c) || c == '-') {
+            if (Character.isLetter(c) || Character.isDigit(c) || c == '-' || c == '_') {
                 key.append(c);
                 continue;
             }
@@ -285,7 +285,7 @@ public final class JsogPath implements Serializable {
 
             key.append(c);
         }
-        
+
         throw new IllegalArgumentException(
                 "Unexpected end-of-string. Expected `" + quote + "'.");
     }
@@ -301,7 +301,7 @@ public final class JsogPath implements Serializable {
         // Build the index string
         StringBuilder index = new StringBuilder();
         for (int i = offset + 1; i < path.length(); i++) {
-            
+
             // Get the next character
             char c = path.charAt(i);
 
@@ -321,7 +321,7 @@ public final class JsogPath implements Serializable {
             throw new IllegalArgumentException(
                     "Keys must be quoted at index " + offset);
         }
-        
+
         throw new IllegalArgumentException(
                 "Unexpected end-of-string. Expected `]'.");
     }
@@ -342,7 +342,7 @@ public final class JsogPath implements Serializable {
 
     /**
      * Parses a JsogPath string, and returns the resulting JsogPath object.
-     * 
+     *
      * <p>
      * This is ALPHA quality code. The API is unlikely to change, and there are
      * test cases covering most of the "happy path" functionality, but corner
@@ -358,7 +358,7 @@ public final class JsogPath implements Serializable {
 
     /**
      * Parses a JsogPath string, and returns the resulting JsogPath object.
-     * 
+     *
      * This method is used in recursion to child nodes.
      * @param path the JsogPath string.
      * @param offset the offset from which to parse.
@@ -411,7 +411,7 @@ public final class JsogPath implements Serializable {
                             "Unexpected end-of-string at index "
                             + offset + ".");
                 }
-                
+
                 // This can either be an index or key
                 if (Character.isDigit(c)) {
 
@@ -526,7 +526,7 @@ public final class JsogPath implements Serializable {
         if (type == Type.root) {
             return jsog;
         }
-        
+
         if (type == Type.array) {
             result = jsog.get(index);
         } else {
@@ -551,7 +551,7 @@ public final class JsogPath implements Serializable {
             if (jp.type == Type.root) {
                 return sb.toString();
             }
-            
+
             if (jp.type == Type.array) {
                 sb.append('[');
                 sb.append(jp.index);
@@ -561,12 +561,12 @@ public final class JsogPath implements Serializable {
                 sb.append(escape(jp.key));
                 sb.append("\"]");
             }
-            
+
             // Iterate over the next child
             jp = jp.child;
         }
 
         return sb.toString();
     }
-    
+
 }
