@@ -102,7 +102,7 @@ public class BeanJsogFactory {
     private JSOG create(final Object bean, final PropertyFilter filter, Stack<Object> visited)
            throws IntrospectionException,
                   InvocationTargetException {
-        
+
         // If bean is null, return a null JSOG
         if (bean == null) {
             logger.log(Level.FINE, "Creating null JSOG from null bean.");
@@ -152,6 +152,14 @@ public class BeanJsogFactory {
                            new Object[] {name, bean.getClass(), bean.hashCode(),
                                          value});
                 result.put(name, value);
+            } else if (value instanceof Enum) {
+                logger.log(Level.FINER,
+                           "Mapping property {0} of bean {1}@{2}"
+                           + " with value {3}",
+                           new Object[] {name, bean.getClass(), bean.hashCode(),
+                                         value});
+                result.put(name, value != null ? value.toString() : null);
+
             } else {
                 logger.log(Level.FINER,
                            "Mapping property {0} of bean {1}@{2}"
@@ -167,7 +175,7 @@ public class BeanJsogFactory {
                         message.append(object.getClass() + "@" + object.hashCode() + "\n");
                     }
                     message.append(value.getClass() + "@" + value.hashCode());
-                    
+
                     throw new IllegalArgumentException(
                             "Circular reference detected:\n" + message.toString());
                 }

@@ -71,6 +71,20 @@ public class BeanJsogFactoryTest {
 
     }
 
+    public static class FooEnum {
+
+        private MyEnum enumValue = MyEnum.Foo;
+
+        public void setEnumValue(MyEnum enumValue) {
+            this.enumValue = enumValue;
+        }
+
+        public MyEnum getEnumValue() {
+            return enumValue;
+        }
+
+    }
+
     public static class Bar {
         private Foo foo = new Foo();
 
@@ -97,6 +111,10 @@ public class BeanJsogFactoryTest {
         }
     }
 
+    public static enum MyEnum {
+        Foo, Bar;
+    }
+
     @Test
     public void testCreateNull() throws Exception {
         JSOG expected = new JSOG();
@@ -112,9 +130,16 @@ public class BeanJsogFactoryTest {
     }
 
     @Test
+    public void testCreateBasicWithEnum() throws Exception {
+        JSOG expected = JSOG.object("enumValue", "Foo");
+        JSOG actual = instance.create(new FooEnum());
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testCreateNested() throws Exception {
         JSOG expected = JSOG.object("bar", null)
-                            .put("foo", 
+                            .put("foo",
                                 JSOG.object("foo", "foo")
                                     .put("bar", true));
         JSOG actual = instance.create(new Bar());
