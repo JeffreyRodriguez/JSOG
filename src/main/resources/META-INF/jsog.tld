@@ -40,7 +40,7 @@
       <name>path</name>
       <description>Evaluates a JSOG path expression on a JSOG object.</description>
       <function-class>net.sf.jsog.JsogPath</function-class>
-      <function-signature>net.sf.jsog.JSOG value(java.lang.String, net.sf.jsog.JSOG)</function-signature>
+      <function-signature>net.sf.jsog.JSOG evaluate(java.lang.String, net.sf.jsog.JSOG)</function-signature>
   </function>
 
   <function>
