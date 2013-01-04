@@ -10,7 +10,7 @@ JSOG provides the developer with an easy way to read, write, and manipulate JSON
     <dependency>
       <groupId>net.sf.jsog</groupId>
       <artifactId>jsog</artifactId>
-      <version>0.33</version>
+      <version>0.34</version>
     </dependency>
 
 
